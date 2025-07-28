@@ -23,7 +23,15 @@ export const projects = [
             "Singleton",
             "Observer",
         ],
-        screenshots: ["/api/placeholder/600/400", "/api/placeholder/600/400"]
+        screenshots:
+            ["/connect-animal/ima4.png",
+                "/connect-animal/ima2.png",
+                "/connect-animal/ima3.png",
+                "/connect-animal/ima1.png",
+                "/connect-animal/ima5.png",
+                "/connect-animal/ima6.png",
+                "/connect-animal/ima7.png",
+                "/connect-animal/ima8.png"]
     },
 
 ];

@@ -66,24 +66,35 @@ const ProjectDetail = ({ project, onBack }) => (
 
                 <div className="space-y-6">
                     <div className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50">
-                        <div className="aspect-video bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center relative">
-                            <div className="absolute inset-0 bg-black/30"></div>
-                            <div className="relative z-10 text-center">
-                                <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mb-4 mx-auto hover:bg-red-700 transition-colors cursor-pointer">
-                                    <div className="w-0 h-0 border-l-6 border-l-white border-y-4 border-y-transparent ml-1"></div>
-                                </div>
-                                <h3 className="text-white font-bold text-lg">{project.title}</h3>
-                            </div>
+                        <div className="relative">
+                            <img
+                                src={project.screenshots?.[0] || ''}
+                                alt={`${project.title} main screenshot`}
+                                className="w-full h-auto object-contain"
+                            />
+                            {/*<div className="absolute inset-0 bg-black/30"></div>*/}
+                            {/*<div className="absolute inset-0 flex items-center justify-center z-10">*/}
+                            {/*    <div className="text-center">*/}
+                            {/*        <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mb-4 mx-auto hover:bg-red-700 transition-colors cursor-pointer">*/}
+                            {/*            <div className="w-0 h-0 border-l-6 border-l-white border-y-4 border-y-transparent ml-1"></div>*/}
+                            {/*        </div>*/}
+                            {/*        <h3 className="text-white font-bold text-lg">{project.title}</h3>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
                         </div>
                     </div>
 
-                    {project.screenshots?.map((screenshot, index) => (
-                        <div key={index} className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50">
-                            <div className="aspect-video bg-gradient-to-br from-gray-700 to-gray-600 flex items-center justify-center">
-                                <span className="text-gray-400">Screenshot {index + 1}</span>
+                    <div className="grid grid-cols-2 gap-6">
+                        {project.screenshots?.slice(1).map((screenshot, index) => (
+                            <div key={index} className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700/50">
+                                <img
+                                    src={screenshot}
+                                    alt={`Screenshot ${index + 1}`}
+                                    className="w-full h-auto object-contain"
+                                />
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
