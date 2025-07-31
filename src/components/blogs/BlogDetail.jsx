@@ -1,14 +1,28 @@
 import {blogPosts} from "../../data/blogPosts.js";
-import {parseMarkdown} from "../../hook/parseMardown.js";
+import {parseMarkdown} from "../../hook/parseMarkdown.js";
 import { ArrowLeft, User, Clock, Calendar, Eye, Tag } from 'lucide-react';
 import {useNavigate, useParams} from "react-router-dom";
 import BlogCard from "./BlogCard.jsx";
+import {useEffect, useState} from "react";
 
 const BlogDetail = () => {
 
     const { slug } = useParams();
     const navigate = useNavigate();
     const post = blogPosts.find(p => p.slug === slug || p.id.toString() === slug);
+    const [parsedContent, setParsedContent] = useState("");
+
+    useEffect(() => {
+        const loadMarkdown = async () => {
+            if (post?.contentPath) {
+                const response = await fetch(post.contentPath);
+                const mdText = await response.text();
+                const html = parseMarkdown(mdText);
+                setParsedContent(html);
+            }
+        };
+        loadMarkdown();
+    }, [post]);
 
     if (!post) {
         return (
@@ -77,8 +91,8 @@ const BlogDetail = () => {
                     {/* Content */}
                     <div className="p-8">
                         <div
-                            className="prose prose-invert max-w-none"
-                            dangerouslySetInnerHTML={{ __html: parseMarkdown(post.content) }}
+                            className="prose max-w-none"
+                            dangerouslySetInnerHTML={{ __html: parsedContent }}
                         />
                     </div>
 
