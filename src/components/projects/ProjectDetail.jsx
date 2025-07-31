@@ -1,7 +1,29 @@
 import React from 'react';
 import { ArrowLeft, Users, Target, Calendar, Globe } from 'lucide-react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { projects } from '../../data/projects.js';
 
-const ProjectDetail = ({ project, onBack }) => {
+const ProjectDetail = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const project = projects.find(p => p.id === parseInt(id));
+
+    if (!project) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
+                <div className="text-center">
+                    <h1 className="text-4xl font-bold text-white mb-4">Project Not Found</h1>
+                    <button
+                        onClick={() => navigate('/projects')}
+                        className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-colors"
+                    >
+                        Back to Projects
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     const getYouTubeEmbedUrl = (url) => {
         if (!url) return null;
 
@@ -52,7 +74,7 @@ const ProjectDetail = ({ project, onBack }) => {
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
             <div className="max-w-6xl mx-auto px-6 py-8">
                 <button
-                    onClick={onBack}
+                    onClick={() => navigate('/projects')} // Sử dụng navigate thay cho onBack
                     className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors mb-8 group"
                 >
                     <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
