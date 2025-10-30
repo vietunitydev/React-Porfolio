@@ -1,7 +1,7 @@
 import React from 'react';
 import { blogPosts } from '../data/blogPosts.js';
 import BlogCard from "../components/blogs/BlogCard.jsx";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const BlogPage = () => {
     const navigate = useNavigate();
@@ -19,14 +19,13 @@ const BlogPage = () => {
                         <BlogCard
                             key={post.id}
                             post={post}
-                            onClick={() => navigate(`/blog/${post.slug}`)}
+                            onClick={() => navigate(`/blogs/${post.slug}`)}
                         />
                     ))}
                 </div>
             </section>
         </div>
-    )
-
-}
+    );
+};
 
 export default BlogPage;

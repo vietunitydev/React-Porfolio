@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/common/Header.jsx';
+import Layout from './components/layout/Layout.jsx';
 import HomePage from './pages/HomePage';
 import ProjectsPage from './pages/ProjectsPage';
 import BlogPage from './pages/BlogPage';
@@ -10,16 +10,15 @@ import BlogDetail from './components/blogs/BlogDetail.jsx';
 const App = () => {
     return (
         <Router>
-            <div className="font-sans">
-                <Header />
+            <Layout>
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/projects" element={<ProjectsPage />} />
                     <Route path="/projects/:id" element={<ProjectDetail />} />
-                    <Route path="/blog" element={<BlogPage />} />
-                    <Route path="/blog/:slug" element={<BlogDetail />} />
+                    <Route path="/blogs" element={<BlogPage />} />
+                    <Route path="/blogs/:slug" element={<BlogDetail />} />
                 </Routes>
-            </div>
+            </Layout>
         </Router>
     );
 };
