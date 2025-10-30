@@ -5,7 +5,7 @@ import NavButton from './NavButton.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
 import {useTranslation} from "react-i18next";
 
-const Header = () => {
+const Header = ({ onNavigate }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const { theme, setTheme, language, setLanguage } = useTheme();
@@ -22,52 +22,59 @@ const Header = () => {
         setLanguage(newLang);
     };
 
+    const handleNavigation = (path) => {
+        navigate(path);
+        if (onNavigate) {
+            onNavigate(); // Close menu on mobile
+        }
+    };
+
     return (
-        <aside className={`fixed left-0 top-0 h-screen w-80 ${theme === 'dark' ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'} border-r flex flex-col shadow-xl`}>
+        <aside className={`h-full w-full ${theme === 'dark' ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'} border-r flex flex-col shadow-xl`}>
             {/* Profile Section */}
-            <div className={`p-8 text-center border-b ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'}`}>
-                <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-purple-500 to-blue-500 p-1 mb-4">
+            <div className={`p-6 sm:p-8 text-center border-b ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'}`}>
+                <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full bg-gradient-to-r from-purple-500 to-blue-500 p-1 mb-3 sm:mb-4">
                     <div className={`w-full h-full rounded-full ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} flex items-center justify-center overflow-hidden`}>
-                        <img src={"/images/me.jpg"} alt={"avatar"}/>
+                        <img src={"/images/me.jpg"} alt={"avatar"} className="w-full h-full object-cover"/>
                     </div>
                 </div>
-                <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-2`}>{t('header.name')}</h1>
-                <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} italic`}>{t('header.title')}</p>
+                <h1 className={`text-xl sm:text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-2`}>{t('header.name')}</h1>
+                <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} italic text-sm sm:text-base`}>{t('header.title')}</p>
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 p-6">
+            <nav className="flex-1 p-4 sm:p-6 overflow-y-auto">
                 <div className="space-y-2">
                     <NavButton
-                        onClick={() => navigate('/')}
+                        onClick={() => handleNavigation('/')}
                         icon={Home}
                         text={t('header.home')}
                         isActive={path === 'home' || path === ''}
                         theme={theme}
                     />
                     <NavButton
-                        onClick={() => navigate('/projects')}
+                        onClick={() => handleNavigation('/projects')}
                         icon={Code}
                         text={t('header.projects')}
                         isActive={path === 'projects'}
                         theme={theme}
                     />
                     <NavButton
-                        onClick={() => navigate('/blogs')}
+                        onClick={() => handleNavigation('/blogs')}
                         icon={BookOpen}
                         text={t('header.blogs')}
                         isActive={path === 'blogs'}
                         theme={theme}
                     />
                     <NavButton
-                        onClick={() => navigate('/archives')}
+                        onClick={() => handleNavigation('/archives')}
                         icon={BookOpen}
                         text={t('header.archives')}
                         isActive={path === 'archives'}
                         theme={theme}
                     />
                     <NavButton
-                        onClick={() => navigate('/about')}
+                        onClick={() => handleNavigation('/about')}
                         icon={BookOpen}
                         text={t('header.about')}
                         isActive={path === 'about'}
@@ -77,8 +84,8 @@ const Header = () => {
             </nav>
 
             {/* Social Links & Controls */}
-            <div className={`p-6 border-t ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'}`}>
-                <div className="flex justify-center gap-3">
+            <div className={`p-4 sm:p-6 border-t ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'}`}>
+                <div className="flex justify-center gap-2 sm:gap-3 flex-wrap">
                     {/* Theme Toggle */}
                     <button
                         onClick={toggleTheme}

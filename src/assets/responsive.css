@@ -1,0 +1,38 @@
+/* Hide scrollbar for swipeable containers */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Smooth scroll behavior */
+.snap-x {
+    scroll-snap-type: x mandatory;
+}
+
+.snap-center {
+    scroll-snap-align: center;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    /* Ensure no horizontal overflow */
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Better touch scrolling */
+    .overflow-x-auto {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Transition for menu */
+@media (max-width: 1024px) {
+    .transition-transform {
+        transition: transform 0.3s ease-in-out;
+    }
+}

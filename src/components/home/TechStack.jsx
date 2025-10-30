@@ -1,5 +1,5 @@
 import React from 'react';
-import { Code, Database, Wrench, Globe, Award, Zap } from 'lucide-react';
+import { Code, Database, Wrench, Globe } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext.jsx';
 
 const TechStack = () => {
@@ -56,42 +56,45 @@ const TechStack = () => {
     ];
 
     return (
-        <section className={`max-w-7xl mx-auto px-20 py-10 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+        <section className={`max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-8 sm:py-10 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
             {/* Header */}
-            <div className="text-center mb-16">
-                <h2 className={`text-4xl md:text-5xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4`}>
+            <div className="text-center mb-8 sm:mb-12 md:mb-16">
+                <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4`}>
                     Tech <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Stack</span>
                 </h2>
             </div>
 
             {/* Tech Categories Table */}
-            <div className={`${theme === 'dark' ? 'bg-gray-800/30' : 'bg-gray-50'} backdrop-blur-sm rounded-2xl border ${theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200'} overflow-hidden mb-12 shadow-lg`}>
+            <div className={`${theme === 'dark' ? 'bg-gray-800/30' : 'bg-gray-50'} backdrop-blur-sm rounded-2xl border ${theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200'} overflow-hidden mb-8 sm:mb-12 shadow-lg`}>
                 {techCategories.map((category, index) => {
                     return (
                         <div
                             key={index}
-                            className={`grid grid-cols-1 md:grid-cols-3 gap-6 p-6 ${index !== techCategories.length - 1 ? `border-b ${theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200'}` : ''}`}
+                            className={`grid grid-cols-1 gap-4 p-4 sm:p-6 ${index !== techCategories.length - 1 ? `border-b ${theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200'}` : ''}`}
                         >
-                            <div className="flex items-center gap-3">
-                                <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{category.title}</h3>
+                            {/* Category Title */}
+                            <div className="flex items-center gap-2 sm:gap-3">
+                                <h3 className={`text-base sm:text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                                    {category.title}
+                                </h3>
                             </div>
 
-                            {/* Right: Skills Icons */}
-                            <div className="md:col-span-2 flex flex-wrap gap-6 items-center">
+                            {/* Skills Icons */}
+                            <div className="flex flex-wrap gap-3 sm:gap-4 md:gap-6 items-center">
                                 {category.skills.map((skill, i) => (
                                     <div
                                         key={i}
                                         className="group relative"
                                         title={skill.name}
                                     >
-                                        <div className={`w-12 h-12 ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} backdrop-blur-sm rounded-xl p-2 border ${theme === 'dark' ? 'border-gray-700/50 hover:border-gray-600' : 'border-gray-200 hover:border-gray-300'} transition-all hover:scale-110 flex items-center justify-center shadow-md`}>
+                                        <div className={`w-10 h-10 sm:w-12 sm:h-12 ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} backdrop-blur-sm rounded-xl p-2 border ${theme === 'dark' ? 'border-gray-700/50 hover:border-gray-600' : 'border-gray-200 hover:border-gray-300'} transition-all hover:scale-110 flex items-center justify-center shadow-md`}>
                                             <img
                                                 src={skill.icon}
                                                 alt={skill.name}
                                                 className="w-full h-full object-contain"
                                             />
                                         </div>
-                                        <span className={`absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap`}>
+                                        <span className={`absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none`}>
                                             {skill.name}
                                         </span>
                                     </div>
