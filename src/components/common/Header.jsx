@@ -31,8 +31,8 @@ const Header = () => {
                         <img src={"me.jpg"} alt={"avatar"}/>
                     </div>
                 </div>
-                <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-2`}>Doan Quoc Viet</h1>
-                <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} italic`}>Software Engineering student at PTIT</p>
+                <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-2`}>{t('header.name')}</h1>
+                <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} italic`}>{t('header.title')}</p>
             </div>
 
             {/* Navigation */}

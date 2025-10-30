@@ -1,23 +1,84 @@
 {
   "header": {
+    "name": "Doan Quoc Viet",
+    "title": "Software Engineering student at PTIT",
     "home": "HOME",
     "projects": "PROJECTS",
     "blogs": "BLOGS",
     "archives": "ARCHIVES",
-    "about": "ABOUT"
+    "about": "ABOUT",
+    "themeDark": "Switch to Light Mode",
+    "themeLight": "Switch to Dark Mode",
+    "languageSwitch": "Chuyển sang Tiếng Việt"
   },
   "hero": {
     "title": "Unity | Fullstack Game Developer",
-    "description": "Fourth-year IT student at PTIT with 2+ years of Unity experience",
+    "description": "Fourth-year IT student at PTIT with {{years}}+ years of Unity experience. Passionate about creating immersive gameplay experiences and solving technical challenges. Aiming to become a Senior Fullstack Game Developer.",
     "yearsExperience": "Years Experience",
     "projectsCompleted": "Projects Completed"
   },
   "projects": {
-    "title": "Featured Projects",
-    "viewAll": "View All Projects"
+    "title": "Projects",
+    "featured": "Featured Projects",
+    "viewAll": "View All Projects",
+    "notFound": "Project Not Found",
+    "backToProjects": "Back to Projects",
+    "overview": "Project Overview",
+    "mainResponsibilities": "Main Responsibilities",
+    "teamSize": "Team Size",
+    "duration": "Duration",
+    "platform": "Platform",
+    "features": "Game Features",
+    "inGameFeatures": "In-game Features:",
+    "technology": "Game Technology",
+    "designPatterns": "Design Pattern:",
+    "technologies": "Technologies:",
+    "screenshots": "Screenshots",
+    "description": "Here are some of the games and projects I've worked on. Each project showcases different aspects of game development and technical challenges I've solved."
+  },
+  "blogs": {
+    "title": "Blogs",
+    "myBlog": "My Blog",
+    "viewAll": "View All Blogs",
+    "readMore": "Read More",
+    "notFound": "Blog Post Not Found",
+    "backToBlog": "Back to Blog",
+    "moreArticles": "More Articles",
+    "tags": "Tags:",
+    "views": "views",
+    "description": "Insights about game development, technical tutorials, and my journey as a Unity developer. Learn from real-world projects and industry best practices."
+  },
+  "techStack": {
+    "title": "Tech Stack",
+    "programmingLanguages": "Programming Languages",
+    "frameworks": "Technologies & Frameworks",
+    "databases": "Databases",
+    "tools": "Tools & Other"
   },
   "contact": {
-    "title": "Connect With Me",
-    "description": "Let's collaborate and create something amazing together"
+    "title": "Connect",
+    "subtitle": "With Me",
+    "description": "Let's collaborate and create something amazing together",
+    "email": "Email",
+    "copyright": "Doan Quoc Viet. All rights reserved."
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "My journey from student to professional game developer",
+    "careerGoal": "Career Goal",
+    "careerGoalText": "Aiming to become a Senior Fullstack Game Developer within the next four years, combining deep Unity expertise with robust backend development skills.",
+    "workExperience": "Work Experience",
+    "achievements": "Key Achievements",
+    "education": "Education",
+    "description": "Fourth-year Information Technology student at PTIT with a strong passion for game development. With 2 years of hands-on experience in Unity Engine, I've contributed to multiple commercial projects ranging from indie games to large-scale team productions.",
+    "description2": "I thrive on solving complex technical challenges and collaborating with cross-functional teams to deliver polished, high-quality gaming experiences that engage players."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "tryAgain": "Try Again",
+    "year": "year",
+    "month": "month",
+    "day": "day"
   }
 }

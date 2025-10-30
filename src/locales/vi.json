@@ -1,23 +1,84 @@
 {
   "header": {
+    "name": "Đoàn Quốc Việt",
+    "title": "Sinh viên Công nghệ phần mềm tại PTIT",
     "home": "TRANG CHỦ",
     "projects": "DỰ ÁN",
     "blogs": "BLOG",
     "archives": "LƯU TRỮ",
-    "about": "GIỚI THIỆU"
+    "about": "GIỚI THIỆU",
+    "themeDark": "Chuyển sang chế độ sáng",
+    "themeLight": "Chuyển sang chế độ tối",
+    "languageSwitch": "Switch to English"
   },
   "hero": {
     "title": "Unity | Fullstack Game Developer",
-    "description": "Sinh viên CNTT năm 4 tại PTIT với hơn 2 năm kinh nghiệm Unity",
+    "description": "Sinh viên CNTT năm 4 tại PTIT với {{years}}+ năm kinh nghiệm Unity. Đam mê tạo ra trải nghiệm game immersive và giải quyết các thách thức kỹ thuật. Mục tiêu trở thành Senior Fullstack Game Developer.",
     "yearsExperience": "Năm Kinh Nghiệm",
     "projectsCompleted": "Dự Án Hoàn Thành"
   },
   "projects": {
-    "title": "Dự Án Nổi Bật",
-    "viewAll": "Xem Tất Cả Dự Án"
+    "title": "Dự Án",
+    "featured": "Dự Án Nổi Bật",
+    "viewAll": "Xem Tất Cả Dự Án",
+    "notFound": "Không Tìm Thấy Dự Án",
+    "backToProjects": "Quay Lại Dự Án",
+    "overview": "Tổng Quan Dự Án",
+    "mainResponsibilities": "Trách Nhiệm Chính",
+    "teamSize": "Quy Mô Team",
+    "duration": "Thời Gian",
+    "platform": "Nền Tảng",
+    "features": "Tính Năng Game",
+    "inGameFeatures": "Tính năng trong game:",
+    "technology": "Công Nghệ Game",
+    "designPatterns": "Design Pattern:",
+    "technologies": "Công Nghệ:",
+    "screenshots": "Ảnh Chụp Màn Hình",
+    "description": "Dưới đây là một số game và dự án tôi đã làm việc. Mỗi dự án thể hiện các khía cạnh khác nhau của phát triển game và các thách thức kỹ thuật tôi đã giải quyết."
+  },
+  "blogs": {
+    "title": "Blogs",
+    "myBlog": "Blog Của Tôi",
+    "viewAll": "Xem Tất Cả Blog",
+    "readMore": "Đọc Thêm",
+    "notFound": "Không Tìm Thấy Bài Viết",
+    "backToBlog": "Quay Lại Blog",
+    "moreArticles": "Bài Viết Khác",
+    "tags": "Tags:",
+    "views": "lượt xem",
+    "description": "Những hiểu biết về phát triển game, hướng dẫn kỹ thuật, và hành trình của tôi với tư cách là Unity developer. Học từ các dự án thực tế và best practices trong ngành."
+  },
+  "techStack": {
+    "title": "Tech Stack",
+    "programmingLanguages": "Ngôn Ngữ Lập Trình",
+    "frameworks": "Công Nghệ & Frameworks",
+    "databases": "Cơ Sở Dữ Liệu",
+    "tools": "Công Cụ & Khác"
   },
   "contact": {
-    "title": "Kết Nối Với Tôi",
-    "description": "Hãy cùng hợp tác và tạo ra điều tuyệt vời"
+    "title": "Kết Nối",
+    "subtitle": "Với Tôi",
+    "description": "Hãy cùng hợp tác và tạo ra điều tuyệt vời",
+    "email": "Email",
+    "copyright": "Doan Quoc Viet. Mọi quyền được bảo lưu."
+  },
+  "about": {
+    "title": "Về Tôi",
+    "subtitle": "Hành trình từ sinh viên đến nhà phát triển game chuyên nghiệp",
+    "careerGoal": "Mục Tiêu Nghề Nghiệp",
+    "careerGoalText": "Phấn đấu trở thành Senior Fullstack Game Developer trong 4 năm tới, kết hợp chuyên môn sâu về Unity với kỹ năng phát triển backend mạnh mẽ.",
+    "workExperience": "Kinh Nghiệm Làm Việc",
+    "achievements": "Thành Tựu Chính",
+    "education": "Học Vấn",
+    "description": "Sinh viên Công nghệ Thông tin năm 4 tại PTIT với niềm đam mê mạnh mẽ về phát triển game. Với 2 năm kinh nghiệm thực tế với Unity Engine, tôi đã đóng góp vào nhiều dự án thương mại từ indie games đến các sản phẩm quy mô lớn.",
+    "description2": "Tôi thích giải quyết các thách thức kỹ thuật phức tạp và hợp tác với các team đa chức năng để tạo ra trải nghiệm game chất lượng cao thu hút người chơi."
+  },
+  "common": {
+    "loading": "Đang tải...",
+    "error": "Đã có lỗi xảy ra",
+    "tryAgain": "Thử lại",
+    "year": "năm",
+    "month": "tháng",
+    "day": "ngày"
   }
 }
