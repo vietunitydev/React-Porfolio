@@ -1,0 +1,23 @@
+{
+  "header": {
+    "home": "TRANG CHỦ",
+    "projects": "DỰ ÁN",
+    "blogs": "BLOG",
+    "archives": "LƯU TRỮ",
+    "about": "GIỚI THIỆU"
+  },
+  "hero": {
+    "title": "Unity | Fullstack Game Developer",
+    "description": "Sinh viên CNTT năm 4 tại PTIT với hơn 2 năm kinh nghiệm Unity",
+    "yearsExperience": "Năm Kinh Nghiệm",
+    "projectsCompleted": "Dự Án Hoàn Thành"
+  },
+  "projects": {
+    "title": "Dự Án Nổi Bật",
+    "viewAll": "Xem Tất Cả Dự Án"
+  },
+  "contact": {
+    "title": "Kết Nối Với Tôi",
+    "description": "Hãy cùng hợp tác và tạo ra điều tuyệt vời"
+  }
+}

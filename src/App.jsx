@@ -7,6 +7,7 @@ import BlogPage from './pages/BlogPage';
 import ProjectDetail from './components/projects/ProjectDetail.jsx';
 import BlogDetail from './components/blogs/BlogDetail.jsx';
 import {ThemeProvider} from "./components/context/ThemeContext.jsx";
+import "./hook/i18n";
 
 const App = () => {
     return (

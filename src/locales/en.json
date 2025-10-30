@@ -1,0 +1,23 @@
+{
+  "header": {
+    "home": "HOME",
+    "projects": "PROJECTS",
+    "blogs": "BLOGS",
+    "archives": "ARCHIVES",
+    "about": "ABOUT"
+  },
+  "hero": {
+    "title": "Unity | Fullstack Game Developer",
+    "description": "Fourth-year IT student at PTIT with 2+ years of Unity experience",
+    "yearsExperience": "Years Experience",
+    "projectsCompleted": "Projects Completed"
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "viewAll": "View All Projects"
+  },
+  "contact": {
+    "title": "Connect With Me",
+    "description": "Let's collaborate and create something amazing together"
+  }
+}

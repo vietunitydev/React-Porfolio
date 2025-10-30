@@ -3,11 +3,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Home, Code, BookOpen, Sun, Moon, Github, Linkedin, Facebook } from 'lucide-react';
 import NavButton from './NavButton.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
+import {useTranslation} from "react-i18next";
 
 const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { theme, setTheme, language, setLanguage } = useTheme();
+    const { t } = useTranslation();
 
     const path = location.pathname.split('/')[1] || 'home';
 
@@ -16,7 +18,8 @@ const Header = () => {
     };
 
     const toggleLanguage = () => {
-        setLanguage(prev => prev === 'vi' ? 'en' : 'vi');
+        const newLang = language === 'vi' ? 'en' : 'vi';
+        setLanguage(newLang);
     };
 
     return (
@@ -38,35 +41,35 @@ const Header = () => {
                     <NavButton
                         onClick={() => navigate('/')}
                         icon={Home}
-                        text="HOME"
+                        text={t('header.home')}
                         isActive={path === 'home' || path === ''}
                         theme={theme}
                     />
                     <NavButton
                         onClick={() => navigate('/projects')}
                         icon={Code}
-                        text="PROJECTS"
+                        text={t('header.projects')}
                         isActive={path === 'projects'}
                         theme={theme}
                     />
                     <NavButton
                         onClick={() => navigate('/blogs')}
                         icon={BookOpen}
-                        text="BLOGS"
+                        text={t('header.blogs')}
                         isActive={path === 'blogs'}
                         theme={theme}
                     />
                     <NavButton
                         onClick={() => navigate('/archives')}
                         icon={BookOpen}
-                        text="ARCHIVES"
+                        text={t('header.archives')}
                         isActive={path === 'archives'}
                         theme={theme}
                     />
                     <NavButton
                         onClick={() => navigate('/about')}
                         icon={BookOpen}
-                        text="ABOUT"
+                        text={t('header.about')}
                         isActive={path === 'about'}
                         theme={theme}
                     />
@@ -91,7 +94,7 @@ const Header = () => {
                         className={`w-10 h-10 rounded-full ${theme === 'dark' ? 'bg-gray-800 text-gray-400 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'} flex items-center justify-center hover:text-white transition-colors text-sm font-semibold`}
                         title={language === 'vi' ? 'Switch to English' : 'Chuyển sang Tiếng Việt'}
                     >
-                        {language === 'vi' ? 'EN' : 'VI'}
+                        {language === 'vi' ? 'VI' : 'EN'}
                     </button>
 
                     {/* GitHub */}
