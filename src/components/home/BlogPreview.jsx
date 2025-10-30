@@ -1,9 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Calendar, Clock, ArrowRight, BookOpen } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext.jsx';
 
 const BlogPreview = () => {
     const navigate = useNavigate();
+    const { theme } = useTheme();
 
     const latestBlogs = [
         {
@@ -36,9 +38,9 @@ const BlogPreview = () => {
     ];
 
     return (
-        <section className="max-w-7xl mx-auto px-20 py-10 bg-gray-900/30 backdrop-blur-sm">
+        <section className={`max-w-7xl mx-auto px-20 py-10 ${theme === 'dark' ? 'bg-gray-900/30' : 'bg-white/30'} backdrop-blur-sm`}>
             <div className="text-center mb-16">
-                <h2 className="text-2xl md:text-5xl font-bold text-white mb-4">
+                <h2 className={`text-2xl md:text-5xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4`}>
                     My <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Blog</span>
                 </h2>
             </div>
@@ -47,36 +49,28 @@ const BlogPreview = () => {
                 {latestBlogs.map((blog, index) => (
                     <div
                         key={blog.id}
-                        className="group bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50 hover:border-gray-600 transition-all duration-300 hover:transform hover:scale-105 cursor-pointer"
+                        className={`group ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} backdrop-blur-sm rounded-2xl overflow-hidden border ${theme === 'dark' ? 'border-gray-700/50 hover:border-gray-600' : 'border-gray-200 hover:border-gray-300'} transition-all duration-300 hover:transform hover:scale-105 cursor-pointer shadow-lg`}
                         onClick={() => navigate(`/blogs/${blog.id}`)}
                         style={{ animationDelay: `${index * 100}ms` }}
                     >
-                        {/* Gradient Header */}
-                        {/*<div className={`h-40 bg-gradient-to-r ${blog.gradient} relative overflow-hidden`}>*/}
-                        {/*    <div className="absolute inset-0 bg-black/20"></div>*/}
-                        {/*    <div className="absolute inset-0 flex items-center justify-center">*/}
-                        {/*        <BookOpen className="w-16 h-16 text-white/30" />*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-
                         <div className="p-6">
                             {/* Category Badge */}
-                            <span className="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-xs font-semibold mb-3">
+                            <span className={`inline-block px-3 py-1 ${theme === 'dark' ? 'bg-purple-500/20' : 'bg-purple-100'} text-purple-400 rounded-full text-xs font-semibold mb-3`}>
                                 {blog.category}
                             </span>
 
                             {/* Title */}
-                            <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors line-clamp-2">
+                            <h3 className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-3 group-hover:text-purple-400 transition-colors line-clamp-2`}>
                                 {blog.title}
                             </h3>
 
                             {/* Excerpt */}
-                            <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+                            <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm mb-4 line-clamp-3`}>
                                 {blog.excerpt}
                             </p>
 
                             {/* Meta Info */}
-                            <div className="flex items-center gap-4 text-xs text-gray-500">
+                            <div className={`flex items-center gap-4 text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>
                                 <div className="flex items-center gap-1">
                                     <Calendar className="w-4 h-4" />
                                     {new Date(blog.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
@@ -88,7 +82,7 @@ const BlogPreview = () => {
                             </div>
 
                             {/* Read More */}
-                            <div className="mt-4 pt-4 border-t border-gray-700/50">
+                            <div className={`mt-4 pt-4 border-t ${theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200'}`}>
                                 <div className="flex items-center gap-2 text-purple-400 text-sm font-semibold group-hover:gap-3 transition-all">
                                     Read More
                                     <ArrowRight className="w-4 h-4" />
@@ -103,7 +97,7 @@ const BlogPreview = () => {
             <div className="text-center">
                 <button
                     onClick={() => navigate('/blogs')}
-                    className="group bg-gray-800/50 backdrop-blur-sm border-2 border-cyan-600 text-cyan-400 px-4 py-1.5 rounded-full hover:bg-cyan-600 hover:text-white transition-all transform hover:scale-105 text-sm font-semibold inline-flex items-center gap-2"
+                    className={`group ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} backdrop-blur-sm border-2 border-cyan-600 text-cyan-400 px-4 py-1.5 rounded-full hover:bg-cyan-600 hover:text-white transition-all transform hover:scale-105 text-sm font-semibold inline-flex items-center gap-2 shadow-lg`}
                 >
                     View All Blogs
                     <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />

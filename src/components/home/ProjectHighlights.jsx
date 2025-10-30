@@ -1,9 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ExternalLink, Users, Calendar } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext.jsx';
 
 const ProjectHighlights = () => {
     const navigate = useNavigate();
+    const { theme } = useTheme();
 
     const featuredProjects = [
         {
@@ -44,19 +46,16 @@ const ProjectHighlights = () => {
     return (
         <section className="max-w-7xl mx-auto px-20 py-10">
             <div className="text-center mb-16">
-                <h2 className="text-2xl md:text-5xl font-bold text-white mb-4">
+                <h2 className={`text-2xl md:text-5xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4`}>
                     Featured <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Projects</span>
                 </h2>
-                {/*<p className="text-gray-400 text-lg max-w-2xl mx-auto">*/}
-                {/*    Showcasing my journey from indie games to large-scale team projects*/}
-                {/*</p>*/}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                 {featuredProjects.slice(0, 6).map((project, index) => (
                     <div
                         key={project.id}
-                        className="group bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50 hover:border-gray-600 transition-all duration-300 hover:transform hover:scale-105"
+                        className={`group ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} backdrop-blur-sm rounded-2xl overflow-hidden border ${theme === 'dark' ? 'border-gray-700/50 hover:border-gray-600' : 'border-gray-200 hover:border-gray-300'} transition-all duration-300 hover:transform hover:scale-105 shadow-lg`}
                         style={{ animationDelay: `${index * 100}ms` }}
                     >
                         {/* Header với gradient */}
@@ -64,14 +63,14 @@ const ProjectHighlights = () => {
 
                         <div className="p-6">
                             <div className="flex items-start justify-between mb-4">
-                                <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
+                                <h3 className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} group-hover:text-purple-400 transition-colors`}>
                                     {project.title}
                                 </h3>
                                 <a
                                     href={project.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-gray-400 hover:text-purple-400 transition-colors"
+                                    className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} hover:text-purple-400 transition-colors`}
                                 >
                                     <ExternalLink className="w-5 h-5" />
                                 </a>
@@ -81,12 +80,12 @@ const ProjectHighlights = () => {
                                 {project.genre}
                             </div>
 
-                            <p className="text-gray-300 text-sm mb-4 line-clamp-3">
+                            <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-sm mb-4 line-clamp-3`}>
                                 {project.description}
                             </p>
 
                             {/* Meta info */}
-                            <div className="flex items-center gap-4 text-xs text-gray-400 mb-4">
+                            <div className={`flex items-center gap-4 text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} mb-4`}>
                                 <div className="flex items-center gap-1">
                                     <Users className="w-4 h-4" />
                                     {project.teamSize}
@@ -102,13 +101,13 @@ const ProjectHighlights = () => {
                                 {project.tech.slice(0, 3).map((tech, i) => (
                                     <span
                                         key={i}
-                                        className="px-3 py-1 bg-gray-700/50 text-gray-300 rounded-full text-xs"
+                                        className={`px-3 py-1 ${theme === 'dark' ? 'bg-gray-700/50 text-gray-300' : 'bg-gray-100 text-gray-700'} rounded-full text-xs`}
                                     >
                                         {tech}
                                     </span>
                                 ))}
                                 {project.tech.length > 3 && (
-                                    <span className="px-3 py-1 bg-gray-700/50 text-gray-400 rounded-full text-xs">
+                                    <span className={`px-3 py-1 ${theme === 'dark' ? 'bg-gray-700/50 text-gray-400' : 'bg-gray-100 text-gray-600'} rounded-full text-xs`}>
                                         +{project.tech.length - 3}
                                     </span>
                                 )}
@@ -122,7 +121,7 @@ const ProjectHighlights = () => {
             <div className="text-center">
                 <button
                     onClick={() => navigate('/projects')}
-                    className="group bg-gray-800/50 backdrop-blur-sm border-2 border-purple-600 text-purple-400 px-4 py-1.5 rounded-full hover:bg-purple-600 hover:text-white transition-all transform hover:scale-105 text-sm font-semibold inline-flex items-center gap-2"
+                    className={`group ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} backdrop-blur-sm border-2 border-purple-600 text-purple-400 px-4 py-1.5 rounded-full hover:bg-purple-600 hover:text-white transition-all transform hover:scale-105 text-sm font-semibold inline-flex items-center gap-2 shadow-lg`}
                 >
                     View All Projects
                     <ExternalLink className="w-3 h-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
