@@ -30,7 +30,7 @@ const BlogDetail = () => {
                 <div className="text-center">
                     <h1 className="text-4xl font-bold text-white mb-4">Blog Post Not Found</h1>
                     <button
-                        onClick={() => navigate('/blog')}
+                        onClick={() => navigate('/blogs')}
                         className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-colors"
                     >
                         Back to Blog
@@ -44,7 +44,7 @@ const BlogDetail = () => {
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
             <div className="max-w-4xl mx-auto px-6 py-16">
                 <button
-                    onClick={() => navigate('/blog')}
+                    onClick={() => navigate('/blogs')}
                     className="flex items-center gap-2 text-purple-400 hover:text-purple-300 mb-8 transition-colors"
                 >
                     <ArrowLeft className="w-5 h-5" />

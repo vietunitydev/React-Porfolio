@@ -10,7 +10,7 @@ const Header = () => {
     const path = location.pathname.split('/')[1] || 'home';
 
     return (
-        <aside className="fixed left-0 top-0 h-screen w-65 bg-gray-900 border-r border-gray-800 flex flex-col">
+        <aside className="fixed left-0 top-0 h-screen w-80 bg-gray-900 border-r border-gray-800 flex flex-col">
             {/* Profile Section */}
             <div className="p-8 text-center border-b border-gray-800">
                 <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-purple-500 to-blue-500 p-1 mb-4">
