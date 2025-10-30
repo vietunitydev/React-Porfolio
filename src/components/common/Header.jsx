@@ -28,7 +28,7 @@ const Header = () => {
             <div className={`p-8 text-center border-b ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'}`}>
                 <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-purple-500 to-blue-500 p-1 mb-4">
                     <div className={`w-full h-full rounded-full ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} flex items-center justify-center overflow-hidden`}>
-                        <img src={"me.jpg"} alt={"avatar"}/>
+                        <img src={"/images/me.jpg"} alt={"avatar"}/>
                     </div>
                 </div>
                 <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-2`}>{t('header.name')}</h1>

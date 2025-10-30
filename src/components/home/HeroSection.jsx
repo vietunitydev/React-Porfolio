@@ -11,7 +11,7 @@ const HeroSection = () => {
                 <div className="mb-8 relative inline-block">
                     <div className="w-40 h-40 rounded-full bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-500 p-1 shadow-2xl">
                         <div className={`w-full h-full rounded-full ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} flex items-center justify-center overflow-hidden`}>
-                            <img src={"me.jpg"} alt={"avatar"}/>
+                            <img src={"/images/me.jpg"} alt={"avatar"}/>
                         </div>
                     </div>
                     <div className="absolute -bottom-2 -right-2 bg-green-500 w-12 h-12 rounded-full flex items-center justify-center shadow-lg">

@@ -12,7 +12,8 @@ const ProjectCard = ({ project, onClick }) => {
         >
             <div className="relative overflow-hidden">
                 <div className="w-full h-48 bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
-                    <span className="text-white font-bold text-xl">{project.title}</span>
+                    {/*<span className="text-white font-bold text-xl">{project.title}</span>*/}
+                    <img src={project.screenshots[0]}/>
                 </div>
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
                 <div className="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold">

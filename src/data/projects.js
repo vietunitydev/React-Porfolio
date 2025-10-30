@@ -45,14 +45,14 @@ export const projects = [
         // Screenshot configuration
         screenshotColumns: 2,
         screenshots: [
-            "/connect-animal/ima4.png",
-            "/connect-animal/ima2.png",
-            "/connect-animal/ima3.png",
-            "/connect-animal/ima1.png",
-            "/connect-animal/ima5.png",
-            "/connect-animal/ima6.png",
-            "/connect-animal/ima7.png",
-            "/connect-animal/ima8.png"
+            "/images/connect-animal/ima4.png",
+            "/images/connect-animal/ima2.png",
+            "/images/connect-animal/ima3.png",
+            "/images/connect-animal/ima1.png",
+            "/images/connect-animal/ima5.png",
+            "/images/connect-animal/ima6.png",
+            "/images/connect-animal/ima7.png",
+            "/images/connect-animal/ima8.png"
         ]
     },
     {
@@ -94,12 +94,12 @@ export const projects = [
         // videoUrl: "https://drive.google.com/file/d/11hdMA07hGL6Q3LfC_Zj2BDvuqlRNpJZu/view?usp=share_link",
         screenshotColumns: 1,
         screenshots: [
-            "/metarush/metarush1.png",
-            "/metarush/metarush2.png",
-            "/metarush/metarush3.png",
-            "/metarush/metarush4.png",
-            "/metarush/metarush5.png",
-            "/metarush/metarush6.png",
+            "/images/metarush/metarush1.png",
+            "/images/metarush/metarush2.png",
+            "/images/metarush/metarush3.png",
+            "/images/metarush/metarush4.png",
+            "/images/metarush/metarush5.png",
+            "/images/metarush/metarush6.png",
         ]
     },
     {
@@ -134,14 +134,14 @@ export const projects = [
         videoUrl: "https://drive.google.com/file/d/11hdMA07hGL6Q3LfC_Zj2BDvuqlRNpJZu/view?usp=share_link",
         screenshotColumns: 1,
         screenshots: [
-            "/battle-wizard/battle-wizard5.png",
-            "/battle-wizard/battle-wizard1.png",
-            "/battle-wizard/battle-wizard2.png",
-            "/battle-wizard/battle-wizard3.png",
-            "/battle-wizard/battle-wizard4.png",
-            "/battle-wizard/battle-wizard6.png",
-            "/battle-wizard/battle-wizard7.png",
-            "/battle-wizard/battle-wizard8.png",
+            "/images/battle-wizard/battle-wizard5.png",
+            "/images/battle-wizard/battle-wizard1.png",
+            "/images/battle-wizard/battle-wizard2.png",
+            "/images/battle-wizard/battle-wizard3.png",
+            "/images/battle-wizard/battle-wizard4.png",
+            "/images/battle-wizard/battle-wizard6.png",
+            "/images/battle-wizard/battle-wizard7.png",
+            "/images/battle-wizard/battle-wizard8.png",
         ]
     },
     {
@@ -189,13 +189,13 @@ export const projects = [
         videoUrl: "https://drive.google.com/file/d/1iQP_6LwJKu1L-UbNqMJdzVT_ofaW7R2d/view?usp=share_link",
         screenshotColumns: 1,
         screenshots: [
-            "/chess-server/chess1.png",
-            "/chess-server/chess2.png",
-            "/chess-server/chess3.png",
-            "/chess-server/chess4.png",
-            "/chess-server/chess5.png",
-            "/chess-server/chess6.png",
-            "/chess-server/chess7.png"
+            "/images/chess-server/chess1.png",
+            "/images/chess-server/chess2.png",
+            "/images/chess-server/chess3.png",
+            "/images/chess-server/chess4.png",
+            "/images/chess-server/chess5.png",
+            "/images/chess-server/chess6.png",
+            "/images/chess-server/chess7.png"
         ]
     }
 ];
