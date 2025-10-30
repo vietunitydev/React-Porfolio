@@ -4,11 +4,12 @@ import { ArrowLeft, User, Clock, Calendar, Eye, Tag } from 'lucide-react';
 import {useNavigate, useParams} from "react-router-dom";
 import BlogCard from "./BlogCard.jsx";
 import {useEffect, useState} from "react";
+import { useTheme } from '../context/ThemeContext.jsx';
 
 const BlogDetail = () => {
-
     const { slug } = useParams();
     const navigate = useNavigate();
+    const { theme } = useTheme();
     const post = blogPosts.find(p => p.slug === slug || p.id.toString() === slug);
     const [parsedContent, setParsedContent] = useState("");
 
@@ -26,9 +27,11 @@ const BlogDetail = () => {
 
     if (!post) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
+            <div className={`min-h-screen ${theme === 'dark'
+                ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900'
+                : 'bg-gradient-to-br from-gray-50 via-white to-gray-50'} flex items-center justify-center`}>
                 <div className="text-center">
-                    <h1 className="text-4xl font-bold text-white mb-4">Blog Post Not Found</h1>
+                    <h1 className={`text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4`}>Blog Post Not Found</h1>
                     <button
                         onClick={() => navigate('/blogs')}
                         className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-colors"
@@ -41,7 +44,9 @@ const BlogDetail = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+        <div className={`min-h-screen ${theme === 'dark'
+            ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900'
+            : 'bg-gradient-to-br from-gray-50 via-white to-gray-50'}`}>
             <div className="max-w-4xl mx-auto px-6 py-16">
                 <button
                     onClick={() => navigate('/blogs')}
@@ -51,20 +56,20 @@ const BlogDetail = () => {
                     Back to Blog
                 </button>
 
-                <article className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden">
+                <article className={`${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} backdrop-blur-sm rounded-2xl border ${theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200'} overflow-hidden shadow-xl`}>
                     {/* Header */}
-                    <div className="p-8 border-b border-gray-700/50">
+                    <div className={`p-8 border-b ${theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200'}`}>
                         <div className="flex flex-wrap gap-2 mb-4">
                             {post.tags.map((tag, index) => (
-                                <span key={index} className="px-3 py-1 bg-purple-600/20 text-purple-300 rounded-full text-sm">
+                                <span key={index} className={`px-3 py-1 ${theme === 'dark' ? 'bg-purple-600/20 text-purple-300' : 'bg-purple-100 text-purple-600'} rounded-full text-sm`}>
                                     #{tag}
                                 </span>
                             ))}
                         </div>
 
-                        <h1 className="text-4xl font-bold text-white mb-4">{post.title}</h1>
+                        <h1 className={`text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4`}>{post.title}</h1>
 
-                        <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm">
+                        <div className={`flex flex-wrap items-center gap-4 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-sm`}>
                             <div className="flex items-center gap-2">
                                 <User className="w-4 h-4" />
                                 <span>{post.author}</span>
@@ -91,21 +96,21 @@ const BlogDetail = () => {
                     {/* Content */}
                     <div className="p-8">
                         <div
-                            className="prose max-w-none"
+                            className={`prose max-w-none ${theme === 'dark' ? 'prose-invert' : ''}`}
                             dangerouslySetInnerHTML={{ __html: parsedContent }}
                         />
                     </div>
 
                     {/* Footer */}
-                    <div className="p-8 border-t border-gray-700/50 bg-gray-900/30">
+                    <div className={`p-8 border-t ${theme === 'dark' ? 'border-gray-700/50 bg-gray-900/30' : 'border-gray-200 bg-gray-50'}`}>
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <Tag className="w-5 h-5 text-purple-400" />
-                                <span className="text-white font-medium">Tags:</span>
+                                <span className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} font-medium`}>Tags:</span>
                             </div>
                             <div className="flex flex-wrap gap-2">
                                 {post.tags.map((tag, index) => (
-                                    <span key={index} className="px-3 py-1 bg-gray-700/50 text-gray-300 rounded-full text-sm">
+                                    <span key={index} className={`px-3 py-1 ${theme === 'dark' ? 'bg-gray-700/50 text-gray-300' : 'bg-gray-200 text-gray-700'} rounded-full text-sm`}>
                                         {tag}
                                     </span>
                                 ))}
@@ -116,13 +121,13 @@ const BlogDetail = () => {
 
                 {/* Related Posts */}
                 <div className="mt-12">
-                    <h2 className="text-2xl font-bold text-white mb-6">More Articles</h2>
+                    <h2 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-6`}>More Articles</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {blogPosts
                             .filter(p => p.id !== post.id)
                             .slice(0, 2)
                             .map((relatedPost) => (
-                                <BlogCard key={relatedPost.id} post={relatedPost} navigate={navigate} />
+                                <BlogCard key={relatedPost.id} post={relatedPost} onClick={() => navigate(`/blogs/${relatedPost.slug}`)} />
                             ))}
                     </div>
                 </div>
