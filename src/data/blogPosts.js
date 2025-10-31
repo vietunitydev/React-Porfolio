@@ -13,26 +13,14 @@ export const blogPosts = [
     },
     {
         id: 2,
-        title: "Building Multiplayer Games with Photon",
-        slug: "multiplayer-games-photon-unity",
-        excerpt: "A complete guide to implementing real-time multiplayer functionality in Unity using Photon PUN2. From setup to advanced features.",
+        title: "Các thuật toán Sắp xếp",
+        slug: "ctdl-sort-1",
+        excerpt: "Learn about sort algorithm",
         author: "Doan Viet",
         publishedAt: "2024-02-20",
         readTime: "12 min read",
-        tags: ["Unity", "Multiplayer", "Photon", "Networking"],
+        tags: ["CSDL", "Thuat Toan", "Sort"],
         views: 892,
-        contentPath: "/blog/blog2.md"
-    },
-    {
-        id: 3,
-        title: "Mobile Game Optimization in Unity",
-        slug: "mobile-game-optimization-unity",
-        excerpt: "Essential techniques for optimizing Unity games for mobile devices. Learn about performance profiling, texture compression, and battery life optimization.",
-        author: "Doan Viet",
-        publishedAt: "2024-03-10",
-        readTime: "15 min read",
-        tags: ["Unity", "Mobile", "Performance", "Optimization"],
-        views: 1456,
-        contentPath: "/blog/blog3.md"
+        contentPath: "/blog/blog_ctdl_sort.md"
     }
 ];
