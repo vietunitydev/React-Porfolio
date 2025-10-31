@@ -47,14 +47,14 @@ const BlogDetail = () => {
         <div className={`min-h-screen ${theme === 'dark'
             ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900'
             : 'bg-gradient-to-br from-gray-50 via-white to-gray-50'}`}>
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-16">
-                <button
-                    onClick={() => navigate('/blogs')}
-                    className="flex items-center gap-2 text-purple-400 hover:text-purple-300 mb-6 sm:mb-8 transition-colors group"
-                >
-                    <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-x-1 transition-transform" />
-                    <span className="text-sm sm:text-base">Back to Blog</span>
-                </button>
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-16">
+                {/*<button*/}
+                {/*    onClick={() => navigate('/blogs')}*/}
+                {/*    className="flex items-center gap-2 text-purple-400 hover:text-purple-300 mb-6 sm:mb-8 transition-colors group"*/}
+                {/*>*/}
+                {/*    <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-x-1 transition-transform" />*/}
+                {/*    <span className="text-sm sm:text-base">Back to Blog</span>*/}
+                {/*</button>*/}
 
                 <article className={`${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} backdrop-blur-sm rounded-2xl border ${theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200'} overflow-hidden shadow-xl`}>
                     {/* Header */}
