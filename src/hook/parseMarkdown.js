@@ -2,6 +2,16 @@ export const parseMarkdown = (markdown) => {
     const escape = (str) =>
         str.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c] || c));
 
+    // Generate slug from heading text for TOC links
+    const generateSlug = (text) => {
+        return text
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .trim();
+    };
+
     // Parse ảnh trước
     markdown = markdown.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="my-4 rounded-lg max-w-full" />');
 
@@ -18,15 +28,13 @@ export const parseMarkdown = (markdown) => {
     // Helpers
     const inlineProcess = (s) => {
         return s
-            .replace(/`([^`]+)`/g, (_m, g1) => `<code class="bg-gray-800 text-purple-300 px-2 py-0.5 rounded text-sm font-mono">${escape(g1)}</code>`)
+            .replace(/`([^`]+)`/g, (_m, g1) => `<code class="bg-gray-800 text-purple-300 px-2 py-0.5 rounded font-mono" style="font-size: 0.875em;">${escape(g1)}</code>`)
             .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-white">$1</strong>');
     };
 
     const isTableSeparator = (line) => {
-        // Ví dụ: | --- | :--- | ---: | :---: |
         const trimmed = line.trim();
         if (!/\|/.test(trimmed)) return false;
-        // Cho phép có/không có | ở đầu/cuối, mỗi cột phải có ít nhất 3 dấu -
         const cells = trimmed.replace(/^\|/, '').replace(/\|$/, '').split('|').map(c => c.trim());
         if (cells.length === 0) return false;
         return cells.every(c => /^:?-{3,}:?$/.test(c));
@@ -44,10 +52,8 @@ export const parseMarkdown = (markdown) => {
     };
 
     const parseTableRow = (line) => {
-        // Chấp nhận cả có/không '|' đầu/cuối
         let content = line.trim();
         if (!/\|/.test(content)) return null;
-        // Tránh coi dòng tiêu đề kiểu "# | ..." thành bảng
         const parts = content.replace(/^\|/, '').replace(/\|$/, '').split('|').map(c => c.trim());
         return parts;
     };
@@ -66,7 +72,7 @@ export const parseMarkdown = (markdown) => {
             } else {
                 const escapedCode = escape(codeBuffer.join('\n'));
                 htmlLines.push(
-                    `<pre class="bg-gray-900 rounded-lg p-4 mb-4 overflow-x-auto"><code class="language-${codeLang} text-green-400 text-sm leading-[1.4] font-mono">${escapedCode}</code></pre>`
+                    `<pre class="bg-gray-900 rounded-lg p-4 mb-4 overflow-x-auto"><code class="language-${codeLang} text-green-400 font-mono leading-[1.4]" style="font-size: 0.875em;">${escapedCode}</code></pre>`
                 );
                 inCodeBlock = false;
                 codeLang = '';
@@ -88,22 +94,18 @@ export const parseMarkdown = (markdown) => {
         }
 
         // ===== PHÁT HIỆN & PARSE BẢNG =====
-        // Điều kiện: dòng hiện tại có '|' (có thể là header), và dòng kế tiếp là separator hợp lệ
         const nextLine = lines[idx + 1] ?? '';
         const headerCells = parseTableRow(line);
         if (headerCells && isTableSeparator(nextLine)) {
-            // Đóng ul/ol đang mở trước khi render bảng
             if (isInUl) { htmlLines.push('</ul>'); isInUl = false; }
             if (isInOl) { htmlLines.push('</ol>'); isInOl = false; }
 
             const alignClasses = parseAlignment(nextLine);
 
-            // Thu thập các dòng nội dung tiếp theo cho đến khi không còn dạng bảng
             let bodyRows = [];
             let scan = idx + 2;
             while (scan < lines.length) {
                 const row = lines[scan];
-                // Dừng khi gặp dòng trống hoặc dòng không có '|' (không còn bảng)
                 if (/^\s*$/.test(row)) break;
                 const cells = parseTableRow(row);
                 if (!cells) break;
@@ -111,7 +113,6 @@ export const parseMarkdown = (markdown) => {
                 scan++;
             }
 
-            // Render bảng
             const ths = headerCells.map((cell, i) => {
                 const cls = alignClasses[i] || 'text-left';
                 return `<th class="px-3 py-2 ${cls} font-semibold text-white border-b border-gray-700">${inlineProcess(cell)}</th>`;
@@ -139,21 +140,26 @@ export const parseMarkdown = (markdown) => {
 </div>`
             );
 
-            // Nhảy chỉ số qua khối bảng đã xử lý
             idx = scan - 1;
             continue;
         }
         // ===== HẾT PHẦN BẢNG =====
 
-        // Headers
+        // Headers with ID for TOC
         if (/^### /.test(line)) {
-            htmlLines.push(`<h3 class="text-xl font-bold text-white mt-6 mb-3">${line.replace(/^### /, '')}</h3>`);
+            const text = line.replace(/^### /, '');
+            const id = generateSlug(text);
+            htmlLines.push(`<h3 id="${id}" class="font-bold text-white mt-6 mb-3 scroll-mt-24" style="font-size: 1.25em;">${text}</h3>`);
             continue;
         } else if (/^## /.test(line)) {
-            htmlLines.push(`<h2 class="text-2xl font-bold text-white mt-8 mb-4">${line.replace(/^## /, '')}</h2>`);
+            const text = line.replace(/^## /, '');
+            const id = generateSlug(text);
+            htmlLines.push(`<h2 id="${id}" class="font-bold text-white mt-8 mb-4 scroll-mt-24" style="font-size: 1.5em;">${text}</h2>`);
             continue;
         } else if (/^# /.test(line)) {
-            htmlLines.push(`<h1 class="text-3xl font-bold text-white mt-8 mb-6">${line.replace(/^# /, '')}</h1>`);
+            const text = line.replace(/^# /, '');
+            const id = generateSlug(text);
+            htmlLines.push(`<h1 id="${id}" class="font-bold text-white mt-8 mb-6 scroll-mt-24" style="font-size: 1.875em;">${text}</h1>`);
             continue;
         }
 
@@ -189,4 +195,43 @@ export const parseMarkdown = (markdown) => {
     if (isInOl) htmlLines.push('</ol>');
 
     return htmlLines.join('\n');
+};
+
+// Extract headings for Table of Contents
+export const extractHeadings = (markdown) => {
+    const generateSlug = (text) => {
+        return text
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .trim();
+    };
+
+    const lines = markdown.split('\n');
+    const headings = [];
+    let inCodeBlock = false;
+
+    for (const line of lines) {
+        // Skip code blocks
+        if (line.match(/^```/)) {
+            inCodeBlock = !inCodeBlock;
+            continue;
+        }
+        if (inCodeBlock) continue;
+
+        // Extract headings
+        if (/^### /.test(line)) {
+            const text = line.replace(/^### /, '').trim();
+            headings.push({ level: 3, text, id: generateSlug(text) });
+        } else if (/^## /.test(line)) {
+            const text = line.replace(/^## /, '').trim();
+            headings.push({ level: 2, text, id: generateSlug(text) });
+        } else if (/^# /.test(line)) {
+            const text = line.replace(/^# /, '').trim();
+            headings.push({ level: 1, text, id: generateSlug(text) });
+        }
+    }
+
+    return headings;
 };

@@ -1,8 +1,10 @@
+
 ## Các thuật toán sắp xếp
 
 Hôm nay chúng ta sẽ cùng tìm hiểu về các thuật toán sắp xếp và phân tích điểm mạnh, yếu và trường hợp áp dụng của nó.
 
 ## 1. Nhóm sắp xếp cơ bản (Elementary Sort)
+
 ### 1.1 Bubble Sort, sắp sếp nổi bọt - O(n²)  
 Sắp xếp nổi bọt xuất phát từ việc phần tử lớn nhất "nổi dần" lên cuối mảng sau mỗi lượt duyệt, giống như bong bóng khí nổi lên mặt nước.  
 **Cách hoạt động:**
@@ -192,6 +194,8 @@ Ta có: T(n/2) = 4T(n/4) + n (2)
 Từ (1) và (2) ta có công thức tổng quát => T(n) = 2^k . T(n/2^k) + kn  
 Công thức luôn đúng với mọi k, ta thay k = log2(n) (đây là số tầng)  
 -> T(n) = n.T(1) + log2(n).n, Áp dụng quy tắc cộng -> **T(n) = log2(n)n**
+
+
 ### 2.2 Quick Sort - O(n log n), xấu nhất O(n²)
 Quick Sort, người anh em của Merge Sort nhưng thực tế thường nhanh hơn và được dùng nhiều hơn trong thư viện chuẩn (C, C++, Java, Python, v.v.).  
 Về tư tưởng, QuickSort cũng dựa trên chia để trị, nhưng khác MergeSort về cách chia.   
@@ -321,7 +325,7 @@ Phần này giúp bạn hệ thống lại toàn bộ các thuật toán sắp x
 |  | **Bucket Sort** | O(n + k) | ✅ | O(n + k) | Chia dữ liệu thành nhóm (bucket) | Khi dữ liệu phân bố đều |
 |  | **Radix Sort** | O(n × k) | ✅ | O(n + k) | Sắp theo từng chữ số (Counting con) | Dữ liệu có độ dài cố định (mã, số điện thoại...) |
 
-## 🔹 So sánh nhanh theo tiêu chí
+## So sánh nhanh theo tiêu chí
 
 | Tiêu chí | Thuật toán nổi bật |
 |-----------|--------------------|
