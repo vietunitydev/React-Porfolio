@@ -136,7 +136,7 @@ Chia đôi liên tục cho đến khi chỉ còn 1 phần tử:
 [3,5] [4,8] [2,7] [1,6]
 ```
 3. Bước 3: Trộn dần lại
-```text
+```
 [3,4,5,8] [1,2,6,7]
 → [1,2,3,4,5,6,7,8] ✅
 ```
@@ -174,7 +174,7 @@ print(merge_sort([5, 3, 8, 4, 2, 7, 1, 6]))
 # 👉 Output: [1, 2, 3, 4, 5, 6, 7, 8]
 ```
 
-#### Chứng minh độ phức tạp thuật toán:  
+**Chứng minh độ phức tạp thuật toán:**   
 **Cách 1:**  
 Merge Sort chia đôi liên tục, ta nhận được 1 cây nhị phân, có log(n) tầng. (n/2^k = 1 -> k=log(n))  
 Ở mỗi tầng, khối lượng công việc thực hiện là n. Trong merge sort, công việc chủ yếu đến từ bước merge.
@@ -192,7 +192,7 @@ Ta có: T(n/2) = 4T(n/4) + n (2)
 Từ (1) và (2) ta có công thức tổng quát => T(n) = 2^k . T(n/2^k) + kn  
 Công thức luôn đúng với mọi k, ta thay k = log2(n) (đây là số tầng)  
 -> T(n) = n.T(1) + log2(n).n, Áp dụng quy tắc cộng -> **T(n) = log2(n)n**
-### 2.2 Quick Sort O(n log n), xấu nhất O(n²)
+### 2.2 Quick Sort - O(n log n), xấu nhất O(n²)
 Quick Sort, người anh em của Merge Sort nhưng thực tế thường nhanh hơn và được dùng nhiều hơn trong thư viện chuẩn (C, C++, Java, Python, v.v.).  
 Về tư tưởng, QuickSort cũng dựa trên chia để trị, nhưng khác MergeSort về cách chia.   
 **Cách hoạt động:**
@@ -204,13 +204,13 @@ Về tư tưởng, QuickSort cũng dựa trên chia để trị, nhưng khác Me
 4. Ghép lại (pivot đứng giữa → không cần merge như Merge Sort)
    
 **Ví dụ:**
-1. Ta có mảng ``` [8, 3, 1, 7, 0, 10, 2] ```
+1. Ta có mảng ` [8, 3, 1, 7, 0, 10, 2] `
 2. Chọn pivot. Giả sử pivot = 7.  
-Phân hoạch: ``` [3, 1, 0, 2] | 7 | [8, 10] ```
+Phân hoạch: ` [3, 1, 0, 2] | 7 | [8, 10] `
 3. Đệ quy sắp xếp từng nửa
-- Trái ``` [3, 1, 0, 2] → [0, 1, 2, 3] ```
-- Phải ``` [8, 10] → [8, 10] ```
-4. Ghép lại : ``` [0, 1, 2, 3] + [7] + [8, 10] = [0, 1, 2, 3, 7, 8, 10] ```
+- Trái ` [3, 1, 0, 2] → [0, 1, 2, 3] `
+- Phải ` [8, 10] → [8, 10] `
+4. Ghép lại : ` [0, 1, 2, 3] + [7] + [8, 10] = [0, 1, 2, 3, 7, 8, 10] `
 
 **Code python:**
 ```Python
@@ -229,6 +229,8 @@ print(quick_sort([8, 3, 1, 7, 0, 10, 2]))
 **Quy tắc chọn pivot:**
 - Chọn pivot tốt → cây đệ quy cân bằng → log n tầng → n log n.
 - Chọn pivot tệ → cây lệch → n tầng → n².
+
+
 ### 2.3 Heap Sort - O(n log n)
 Heap sort là một thuật toán sắp xếp cổ điển nhưng cực kì mạnh, nó luôn chạy O(nlog(n)) trong mọi trường hợp, không cần bộ nhớ phụ như Merge sort.  
 **Ý tưởng:**
@@ -239,7 +241,7 @@ Heap Sort = Dựng cây Heap + Trích phần tử lớn nhất liên tục
 5. Lặp lại cho đến khi mảng được sắp xếp.
 
 **Ví dụ:**
-1. Mảng ban đầu: ```[4, 10, 3, 5, 1]```
+1. Mảng ban đầu: `[4, 10, 3, 5, 1]`
 2. Xây cây Heap: Biến cây thoả mãn: cha ≥ con
 ```
        10
@@ -248,15 +250,15 @@ Heap Sort = Dựng cây Heap + Trích phần tử lớn nhất liên tục
     / \
    4   1
 ```
--> Mảng Heap tương ứng : ```Mảng heap tương ứng: [10, 5, 3, 4, 1]```
-3. Đưa max (10) về cuối ```Swap 10 - 1```  
-   → Giảm kích thước heap còn 4, heapify lại phần còn ```[1, 5, 3, 4]```  
-   → ```[5, 4, 3, 1, 10]```
+-> Mảng Heap tương ứng : `Mảng heap tương ứng: [10, 5, 3, 4, 1]`
+3. Đưa max (10) về cuối `Swap 10 - 1`   
+   → Giảm kích thước heap còn 4, heapify lại phần còn `[1, 5, 3, 4]`  
+   → `[5, 4, 3, 1, 10]`
 4. Lặp lại  
-   Swap 5 ↔ 1 → ```[1, 4, 3, 5, 10]``` → heapify ```[1, 4, 3] → [4, 1, 3, 5, 10]```  
-   Swap 4 ↔ 3 → ```[3, 1, 4, 5, 10]``` → heapify ```[3,1] → [3,1,4,5,10]```  
-   Swap 3 ↔ 1 → ```[1,3,4,5,10]```  
-   ✅ Kết quả cuối cùng: ```[1, 3, 4, 5, 10]```
+   Swap 5 ↔ 1 → `[1, 4, 3, 5, 10]` → heapify `[1, 4, 3] → [4, 1, 3, 5, 10]`  
+   Swap 4 ↔ 3 → `[3, 1, 4, 5, 10]` → heapify `[3,1] → [3 ,1 , 4, 5, 10]`  
+   Swap 3 ↔ 1 → `[1 ,3 , 4, 5, 10]`  
+   ✅ Kết quả cuối cùng: `[1, 3, 4, 5, 10]`
 
 **Code python:**
 ```Python
