@@ -22,8 +22,9 @@ export const parseMarkdown = (markdown) => {
     let codeBuffer = [];
     let htmlLines = [];
 
-    let isInUl = false;
-    let isInOl = false;
+    // Biến theo dõi cấp độ danh sách hiện tại
+    let listStack = []; // ['ul', 'ul', ...] - theo dõi các loại list và cấp độ
+    const LIST_INDENT_SPACES = 4; // Số khoảng trắng cho mỗi cấp độ thụt lề
 
     // Helpers
     const inlineProcess = (s) => {
@@ -58,6 +59,14 @@ export const parseMarkdown = (markdown) => {
         return parts;
     };
 
+    // Hàm đóng tất cả danh sách đang mở
+    const closeAllLists = () => {
+        while (listStack.length > 0) {
+            const type = listStack.pop();
+            htmlLines.push(`</${type}>`);
+        }
+    }
+
     // Duyệt với chỉ số để có thể lookahead khi gặp bảng
     for (let idx = 0; idx < lines.length; idx++) {
         let line = lines[idx];
@@ -65,6 +74,7 @@ export const parseMarkdown = (markdown) => {
         // Bắt đầu/kết thúc code block ```
         const codeBlockMatch = line.match(/^```(\w*)/);
         if (codeBlockMatch) {
+            closeAllLists(); // Đóng list trước khi vào code block
             if (!inCodeBlock) {
                 inCodeBlock = true;
                 codeLang = codeBlockMatch[1] || '';
@@ -87,9 +97,15 @@ export const parseMarkdown = (markdown) => {
 
         // Dòng trắng → kết thúc ul/ol nếu đang mở
         if (/^\s*$/.test(line)) {
-            if (isInUl) { htmlLines.push('</ul>'); isInUl = false; }
-            if (isInOl) { htmlLines.push('</ol>'); isInOl = false; }
+            closeAllLists(); // Đóng list khi gặp dòng trắng
             htmlLines.push('');
+            continue;
+        }
+
+        // ===== GẠCH NGANG MÀN HÌNH (HORIZONTAL RULE) =====
+        if (/^(\s*[-*_]\s*){3,}\s*$/.test(line.trim())) {
+            closeAllLists();
+            htmlLines.push('<hr class="my-6 border-gray-700">');
             continue;
         }
 
@@ -97,8 +113,7 @@ export const parseMarkdown = (markdown) => {
         const nextLine = lines[idx + 1] ?? '';
         const headerCells = parseTableRow(line);
         if (headerCells && isTableSeparator(nextLine)) {
-            if (isInUl) { htmlLines.push('</ul>'); isInUl = false; }
-            if (isInOl) { htmlLines.push('</ol>'); isInOl = false; }
+            closeAllLists(); // Đóng list trước khi vào bảng
 
             const alignClasses = parseAlignment(nextLine);
 
@@ -147,57 +162,91 @@ export const parseMarkdown = (markdown) => {
 
         // Headers with ID for TOC
         if (/^### /.test(line)) {
+            closeAllLists();
             const text = line.replace(/^### /, '');
             const id = generateSlug(text);
             htmlLines.push(`<h3 id="${id}" class="font-bold text-white mt-6 mb-3 scroll-mt-24" style="font-size: 1.25em;">${text}</h3>`);
             continue;
         } else if (/^## /.test(line)) {
+            closeAllLists();
             const text = line.replace(/^## /, '');
             const id = generateSlug(text);
             htmlLines.push(`<h2 id="${id}" class="font-bold text-white mt-8 mb-4 scroll-mt-24" style="font-size: 1.5em;">${text}</h2>`);
             continue;
         } else if (/^# /.test(line)) {
+            closeAllLists();
             const text = line.replace(/^# /, '');
             const id = generateSlug(text);
             htmlLines.push(`<h1 id="${id}" class="font-bold text-white mt-8 mb-6 scroll-mt-24" style="font-size: 1.875em;">${text}</h1>`);
             continue;
         }
 
-        // Unordered list
-        if (/^-\s+/.test(line)) {
-            if (!isInUl) {
-                htmlLines.push('<ul class="list-disc ml-6 text-gray-300 mb-4">');
-                isInUl = true;
+        // ===== DANH SÁCH LỒNG NHAU (LISTS) =====
+        const ulMatch = line.match(/^(\s*)-\s+([^\s].*)/); // - Item
+        const olMatch = line.match(/^(\s*)\d+\.\s+([^\s].*)/); // 1. Item
+
+        if (ulMatch || olMatch) {
+            const match = ulMatch || olMatch;
+            const leadingSpaces = match[1].length;
+            const content = match[2];
+            const listType = ulMatch ? 'ul' : 'ol';
+            const currentLevel = leadingSpaces / LIST_INDENT_SPACES;
+
+            // Đảm bảo thụt lề hợp lệ (chỉ chấp nhận các bước 4 space)
+            if (leadingSpaces % LIST_INDENT_SPACES !== 0) {
+                // Nếu không phải list hợp lệ, xử lý như paragraph bình thường.
+                const inlineProcessed = inlineProcess(line);
+                htmlLines.push(`<p class="text-gray-300 leading-relaxed mb-2">${inlineProcessed}</p>`);
+                continue;
             }
-            const inline = inlineProcess(line.replace(/^- /, ''));
+
+            // Xử lý đóng/mở list
+            while (listStack.length > currentLevel) {
+                const closedType = listStack.pop();
+                htmlLines.push(`</${closedType}>`);
+            }
+            while (listStack.length < currentLevel) {
+                // Giả sử lồng nhau chỉ là ul
+                listStack.push('ul');
+                htmlLines.push('<ul class="list-disc ml-6 text-gray-300 mb-4 list-disc-indent">');
+            }
+
+            // Nếu cấp độ hiện tại không phải là cấp độ listType, đóng cấp độ cũ và mở cấp độ mới
+            if (listStack.length === currentLevel && listStack[listStack.length - 1] !== listType) {
+                if(listStack.length > 0) {
+                    const closedType = listStack.pop();
+                    htmlLines.push(`</${closedType}>`);
+                }
+            }
+
+            // Mở list mới nếu cần
+            if (listStack.length === currentLevel) {
+                listStack.push(listType);
+                // Thêm class 'ml-6' chỉ cho list ngoài cùng, list lồng nhau không cần thêm
+                const listClass = listStack.length === 1 ? 'list-disc ml-6 text-gray-300 mb-4' : 'list-disc ml-6 text-gray-300 mb-0';
+                htmlLines.push(`<${listType} class="${listClass}">`);
+            }
+
+            const inline = inlineProcess(content);
             htmlLines.push(`<li>${inline}</li>`);
+
             continue;
         }
+        // ===== HẾT PHẦN DANH SÁCH LỒNG NHAU =====
 
-        // Ordered list
-        if (/^\d+\.\s+/.test(line)) {
-            if (!isInOl) {
-                htmlLines.push('<ol class="list-decimal ml-6 text-gray-300 mb-4">');
-                isInOl = true;
-            }
-            const inline = inlineProcess(line.replace(/^\d+\.\s+/, ''));
-            htmlLines.push(`<li>${inline}</li>`);
-            continue;
-        }
-
-        // Normal paragraph
+        // Normal paragraph (chỉ xử lý khi không khớp với bất kỳ cú pháp nào khác)
+        closeAllLists();
         const inlineProcessed = inlineProcess(line);
         htmlLines.push(`<p class="text-gray-300 leading-relaxed mb-2">${inlineProcessed}</p>`);
     }
 
     // Đóng danh sách nếu còn dang dở
-    if (isInUl) htmlLines.push('</ul>');
-    if (isInOl) htmlLines.push('</ol>');
+    closeAllLists();
 
     return htmlLines.join('\n');
 };
 
-// Extract headings for Table of Contents
+// Hàm extractHeadings (không thay đổi)
 export const extractHeadings = (markdown) => {
     const generateSlug = (text) => {
         return text
