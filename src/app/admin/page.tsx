@@ -7,7 +7,7 @@ const cardClass =
 export default function AdminDashboardPage() {
   return (
     <AdminContainer title="Dashboard">
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
         <Link href="/admin/projects" className={cardClass}>
           <h2 className="text-lg font-semibold text-slate-900">Projects</h2>
           <p className="mt-2 text-sm text-slate-600">
@@ -19,6 +19,13 @@ export default function AdminDashboardPage() {
           <h2 className="text-lg font-semibold text-slate-900">Blogs</h2>
           <p className="mt-2 text-sm text-slate-600">
             Manage blog metadata and markdown content from one place.
+          </p>
+        </Link>
+
+        <Link href="/admin/archives" className={cardClass}>
+          <h2 className="text-lg font-semibold text-slate-900">Archives</h2>
+          <p className="mt-2 text-sm text-slate-600">
+            Create personal milestone stories used on the public archive pages.
           </p>
         </Link>
 

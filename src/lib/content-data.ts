@@ -1,6 +1,7 @@
 import connectDB from './mongodb';
 import {Project} from './models/project';
 import {Blog} from './models/blog';
+import {Archive} from './models/archive';
 import {ensureInitialContentSeeded} from './seed-content';
 import {unstable_cache} from 'next/cache';
 
@@ -8,6 +9,7 @@ type LeanRecord = Record<string, unknown>;
 
 export const PROJECTS_CACHE_TAG = 'projects';
 export const BLOGS_CACHE_TAG = 'blogs';
+export const ARCHIVES_CACHE_TAG = 'archives';
 
 export function mapProject(doc: LeanRecord) {
   return {
@@ -44,6 +46,20 @@ export function mapBlog(doc: LeanRecord) {
     tags: Array.isArray(doc.tags) ? doc.tags.map(String) : [],
     views: Number(doc.views ?? 0),
     content: String(doc.content ?? ''),
+    createdAt: doc.createdAt ? new Date(String(doc.createdAt)).toISOString() : '',
+    updatedAt: doc.updatedAt ? new Date(String(doc.updatedAt)).toISOString() : '',
+  };
+}
+
+export function mapArchive(doc: LeanRecord) {
+  return {
+    _id: String(doc._id ?? ''),
+    title: String(doc.title ?? ''),
+    slug: String(doc.slug ?? ''),
+    content: String(doc.content ?? ''),
+    happenedAt: doc.happenedAt
+      ? new Date(String(doc.happenedAt)).toISOString()
+      : new Date().toISOString(),
     createdAt: doc.createdAt ? new Date(String(doc.createdAt)).toISOString() : '',
     updatedAt: doc.updatedAt ? new Date(String(doc.updatedAt)).toISOString() : '',
   };
@@ -103,6 +119,26 @@ const getCachedRelatedBlogs = unstable_cache(
   {tags: [BLOGS_CACHE_TAG]}
 );
 
+const getCachedArchives = unstable_cache(
+  async () => {
+    await connectDB();
+    const docs = await Archive.find().sort({happenedAt: -1, createdAt: -1}).lean();
+    return docs.map((doc) => mapArchive(doc as unknown as LeanRecord));
+  },
+  ['public-archives'],
+  {tags: [ARCHIVES_CACHE_TAG]}
+);
+
+const getCachedArchiveBySlug = unstable_cache(
+  async (slug: string) => {
+    await connectDB();
+    const doc = await Archive.findOne({slug}).lean();
+    return doc ? mapArchive(doc as unknown as LeanRecord) : null;
+  },
+  ['public-archive-by-slug'],
+  {tags: [ARCHIVES_CACHE_TAG]}
+);
+
 export async function getPublicProjects() {
   await ensureInitialContentSeeded();
   return getCachedProjects();
@@ -126,4 +162,12 @@ export async function getPublicBlogBySlug(slug: string) {
 export async function getRelatedBlogs(excludeLegacyId: number, limit = 2) {
   await ensureInitialContentSeeded();
   return getCachedRelatedBlogs(excludeLegacyId, limit);
+}
+
+export async function getPublicArchives() {
+  return getCachedArchives();
+}
+
+export async function getPublicArchiveBySlug(slug: string) {
+  return getCachedArchiveBySlug(slug);
 }

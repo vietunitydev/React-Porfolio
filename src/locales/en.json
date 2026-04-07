@@ -48,6 +48,12 @@
     "views": "views",
     "description": "Insights about game development, technical tutorials, and my journey as a Unity developer. Learn from real-world projects and industry best practices."
   },
+  "archives": {
+    "title": "Archives",
+    "description": "Personal milestones and memories.",
+    "empty": "No archive entries yet.",
+    "backToArchive": "Back to archives"
+  },
   "techStack": {
     "title": "Tech Stack",
     "programmingLanguages": "Programming Languages",

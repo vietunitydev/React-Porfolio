@@ -48,6 +48,12 @@
     "views": "lượt xem",
     "description": "Những hiểu biết về phát triển game, hướng dẫn kỹ thuật, và hành trình của tôi với tư cách là Unity developer. Học từ các dự án thực tế và best practices trong ngành."
   },
+  "archives": {
+    "title": "Lưu Trữ",
+    "description": "Những cột mốc và kỷ niệm cá nhân.",
+    "empty": "Chưa có nội dung lưu trữ.",
+    "backToArchive": "Quay lại lưu trữ"
+  },
   "techStack": {
     "title": "Tech Stack",
     "programmingLanguages": "Ngôn Ngữ Lập Trình",
