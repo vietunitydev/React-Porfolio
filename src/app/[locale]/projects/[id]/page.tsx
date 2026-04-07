@@ -2,8 +2,6 @@ import {notFound} from 'next/navigation';
 import ProjectDetail from '../../../../components/projects/ProjectDetail.jsx';
 import {getPublicProjectById} from '../../../../lib/content-data';
 
-export const dynamic = 'force-dynamic';
-
 type ProjectDetailPageProps = {
   params: Promise<{
     id: string;

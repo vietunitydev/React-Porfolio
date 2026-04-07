@@ -1,8 +1,9 @@
 import {NextResponse} from 'next/server';
+import {revalidateTag} from 'next/cache';
 import connectDB from '../../../../lib/mongodb';
 import {Blog} from '../../../../lib/models/blog';
 import {ensureInitialContentSeeded} from '../../../../lib/seed-content';
-import {mapBlog} from '../../../../lib/content-data';
+import {BLOGS_CACHE_TAG, mapBlog} from '../../../../lib/content-data';
 import {
   normalizeNumber,
   normalizeStringArray,
@@ -81,6 +82,8 @@ export async function POST(request: Request) {
     views: Math.max(0, normalizeNumber(payload?.views, 0)),
     content: String(payload?.content ?? ''),
   });
+
+  revalidateTag(BLOGS_CACHE_TAG);
 
   return NextResponse.json({
     success: true,

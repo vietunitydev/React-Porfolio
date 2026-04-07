@@ -11,6 +11,11 @@ export default function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const sessionToken = request.cookies.get(ADMIN_SESSION_COOKIE)?.value;
   const isAuthenticated = isValidAdminSession(sessionToken);
+  const localeCookie = request.cookies.get('NEXT_LOCALE')?.value;
+
+  if (pathname === '/' && !localeCookie) {
+    return NextResponse.redirect(new URL('/vi', request.url));
+  }
 
   if (pathname.startsWith('/admin')) {
     if (pathname === '/admin/login') {

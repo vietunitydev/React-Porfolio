@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
 import {NextResponse} from 'next/server';
+import {revalidateTag} from 'next/cache';
 import connectDB from '../../../../../lib/mongodb';
 import {Blog} from '../../../../../lib/models/blog';
-import {mapBlog} from '../../../../../lib/content-data';
+import {BLOGS_CACHE_TAG, mapBlog} from '../../../../../lib/content-data';
 import {
   normalizeNumber,
   normalizeStringArray,
@@ -96,6 +97,8 @@ export async function PUT(request: Request, context: RouteContext) {
     return NextResponse.json({success: false, message: 'Blog not found.'}, {status: 404});
   }
 
+  revalidateTag(BLOGS_CACHE_TAG);
+
   return NextResponse.json({
     success: true,
     message: 'Blog updated.',
@@ -116,6 +119,8 @@ export async function DELETE(_request: Request, context: RouteContext) {
   if (!deleted) {
     return NextResponse.json({success: false, message: 'Blog not found.'}, {status: 404});
   }
+
+  revalidateTag(BLOGS_CACHE_TAG);
 
   return NextResponse.json({success: true, message: 'Blog deleted.'});
 }

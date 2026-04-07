@@ -1,7 +1,7 @@
 {
   "header": {
     "name": "Đoàn Quốc Việt",
-    "title": "Sinh viên Công nghệ phần mềm tại PTIT",
+    "title": "Software Engineer | Game Developer",
     "home": "TRANG CHỦ",
     "projects": "DỰ ÁN",
     "blogs": "BLOG",
@@ -12,8 +12,8 @@
     "languageSwitch": "Switch to English"
   },
   "hero": {
-    "title": "Unity | Fullstack Game Developer",
-    "description": "Sinh viên CNTT năm 4 tại PTIT với {{years}}+ năm kinh nghiệm Unity. Đam mê tạo ra trải nghiệm game immersive và giải quyết các thách thức kỹ thuật. Mục tiêu trở thành Senior Fullstack Game Developer.",
+    "title": "Unity Game Developer",
+    "description": "Mình là Việt, Software Engineer và Game Developer.",
     "yearsExperience": "Năm Kinh Nghiệm",
     "projectsCompleted": "Dự Án Hoàn Thành"
   },

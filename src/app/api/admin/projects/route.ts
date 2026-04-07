@@ -1,8 +1,9 @@
 import {NextResponse} from 'next/server';
+import {revalidateTag} from 'next/cache';
 import connectDB from '../../../../lib/mongodb';
 import {Project} from '../../../../lib/models/project';
 import {ensureInitialContentSeeded} from '../../../../lib/seed-content';
-import {mapProject} from '../../../../lib/content-data';
+import {mapProject, PROJECTS_CACHE_TAG} from '../../../../lib/content-data';
 import {normalizeNumber, normalizeStringArray} from '../../../../lib/admin-utils';
 
 export async function GET() {
@@ -65,6 +66,8 @@ export async function POST(request: Request) {
     ),
     screenshots: normalizeStringArray(payload?.screenshots),
   });
+
+  revalidateTag(PROJECTS_CACHE_TAG);
 
   return NextResponse.json({
     success: true,

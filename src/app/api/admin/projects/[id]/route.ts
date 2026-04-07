@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
 import {NextResponse} from 'next/server';
+import {revalidateTag} from 'next/cache';
 import connectDB from '../../../../../lib/mongodb';
 import {Project} from '../../../../../lib/models/project';
-import {mapProject} from '../../../../../lib/content-data';
+import {mapProject, PROJECTS_CACHE_TAG} from '../../../../../lib/content-data';
 import {normalizeNumber, normalizeStringArray} from '../../../../../lib/admin-utils';
 
 type RouteContext = {
@@ -79,6 +80,8 @@ export async function PUT(request: Request, context: RouteContext) {
     return NextResponse.json({success: false, message: 'Project not found.'}, {status: 404});
   }
 
+  revalidateTag(PROJECTS_CACHE_TAG);
+
   return NextResponse.json({
     success: true,
     message: 'Project updated.',
@@ -99,6 +102,8 @@ export async function DELETE(_request: Request, context: RouteContext) {
   if (!deleted) {
     return NextResponse.json({success: false, message: 'Project not found.'}, {status: 404});
   }
+
+  revalidateTag(PROJECTS_CACHE_TAG);
 
   return NextResponse.json({success: true, message: 'Project deleted.'});
 }

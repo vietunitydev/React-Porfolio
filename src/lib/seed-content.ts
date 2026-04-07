@@ -7,6 +7,7 @@ import {projects as legacyProjects} from '../data/projects.js';
 import {blogPosts as legacyBlogPosts} from '../data/blogPosts.js';
 
 let seedPromise: Promise<void> | null = null;
+let hasCheckedSeed = false;
 
 async function loadMarkdownFromContentPath(contentPath: string) {
   const normalizedPath = contentPath.replace(/^\//, '');
@@ -15,6 +16,10 @@ async function loadMarkdownFromContentPath(contentPath: string) {
 }
 
 export async function ensureInitialContentSeeded() {
+  if (hasCheckedSeed) {
+    return;
+  }
+
   if (seedPromise) {
     return seedPromise;
   }
@@ -66,6 +71,8 @@ export async function ensureInitialContentSeeded() {
 
       await Blog.insertMany(blogs);
     }
+
+    hasCheckedSeed = true;
   })();
 
   try {

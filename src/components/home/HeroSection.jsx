@@ -1,8 +1,10 @@
 import React from 'react';
 import { useTheme } from '../context/ThemeContext.jsx';
+import { useTranslations } from 'next-intl';
 
 const HeroSection = () => {
     const { theme } = useTheme();
+    const t = useTranslations();
 
     return (
         <section className="flex items-center justify-center px-4 sm:px-6 py-8 sm:py-10">
@@ -21,25 +23,23 @@ const HeroSection = () => {
 
                 {/* Title - responsive text */}
                 <h2 className={`text-lg sm:text-xl md:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-blue-300 mb-4 sm:mb-6 font-semibold px-4`}>
-                    Unity | Fullstack Game Developer
+                    {t('hero.title')}
                 </h2>
 
                 {/* Description - responsive text */}
                 <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-6 sm:mb-8 px-4`}>
-                    Fourth-year IT student at PTIT with <span className="text-purple-400 font-semibold">2+ years of Unity experience</span>.
-                    Passionate about creating immersive gameplay experiences and solving technical challenges.
-                    Aiming to become a <span className="text-cyan-400 font-semibold">Senior Fullstack Game Developer</span>.
+                    {t('hero.description', {years: 2})}
                 </p>
 
                 {/* Stats - responsive layout */}
                 <div className="flex justify-center gap-6 sm:gap-8 mb-2 flex-wrap px-4">
                     <div className="text-center">
                         <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-purple-400">2+</div>
-                        <div className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-xs sm:text-sm`}>Years Experience</div>
+                        <div className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-xs sm:text-sm`}>{t('hero.yearsExperience')}</div>
                     </div>
                     <div className="text-center">
                         <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-400">10+</div>
-                        <div className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-xs sm:text-sm`}>Projects Completed</div>
+                        <div className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} text-xs sm:text-sm`}>{t('hero.projectsCompleted')}</div>
                     </div>
                 </div>
             </div>

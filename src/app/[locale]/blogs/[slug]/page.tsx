@@ -3,8 +3,6 @@ import BlogDetail from '../../../../components/blogs/BlogDetail.jsx';
 import {getPublicBlogBySlug, getRelatedBlogs} from '../../../../lib/content-data';
 import {extractHeadings, parseMarkdown} from '../../../../hook/parseMarkdown.js';
 
-export const dynamic = 'force-dynamic';
-
 type BlogDetailPageProps = {
   params: Promise<{
     slug: string;

@@ -5,6 +5,11 @@ import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from '../../i18n/navigation';
 
 const ThemeContext = createContext(undefined);
+const LOCALE_COOKIE_NAME = 'NEXT_LOCALE';
+
+function setLocaleCookie(lang) {
+    document.cookie = `${LOCALE_COOKIE_NAME}=${lang}; path=/; max-age=31536000; samesite=lax`;
+}
 
 export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState('dark');
@@ -24,8 +29,19 @@ export const ThemeProvider = ({ children }) => {
         localStorage.setItem('theme', theme);
     }, [theme]);
 
+    useEffect(() => {
+        const savedLanguage = localStorage.getItem('language');
+        if (savedLanguage === 'vi' || savedLanguage === 'en') {
+            setLocaleCookie(savedLanguage);
+            if (savedLanguage !== locale) {
+                router.replace(pathname, { locale: savedLanguage });
+            }
+        }
+    }, [locale, pathname, router]);
+
     const setLanguage = (lang) => {
         localStorage.setItem('language', lang);
+        setLocaleCookie(lang);
         if (lang !== locale) {
             router.replace(pathname, { locale: lang });
         }
