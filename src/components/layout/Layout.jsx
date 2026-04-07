@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import Header from '../common/Header';
 import { useTheme } from '../context/ThemeContext.jsx';

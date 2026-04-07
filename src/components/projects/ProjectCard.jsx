@@ -4,6 +4,9 @@ import { useTheme } from '../context/ThemeContext.jsx';
 
 const ProjectCard = ({ project, onClick }) => {
     const { theme } = useTheme();
+    const thumbnail =
+        project.screenshots?.[0] ||
+        'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="240" viewBox="0 0 400 240"%3E%3Crect width="400" height="240" fill="%23334155"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23cbd5e1" font-family="Arial" font-size="18"%3ENo Image%3C/text%3E%3C/svg%3E';
 
     return (
         <div
@@ -15,7 +18,7 @@ const ProjectCard = ({ project, onClick }) => {
                 <div className="relative overflow-hidden w-32 sm:w-48 md:w-64 flex-shrink-0">
                     <div className="w-full h-full bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
                         <img
-                            src={project.screenshots[0]}
+                            src={thumbnail}
                             alt={project.title}
                             className="w-full h-full object-cover"
                         />

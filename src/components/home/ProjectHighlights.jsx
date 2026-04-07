@@ -1,50 +1,33 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from '../../i18n/navigation';
 import { ExternalLink, Users, Calendar } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext.jsx';
 
-const ProjectHighlights = () => {
-    const navigate = useNavigate();
+/**
+ * @param {{
+ *   projects?: Array<any>
+ * }} props
+ */
+const ProjectHighlights = ({ projects = [] }) => {
+    const router = useRouter();
     const { theme } = useTheme();
     const [currentIndex, setCurrentIndex] = useState(0);
     const scrollContainerRef = useRef(null);
     const [isMobile, setIsMobile] = useState(false);
 
-    const featuredProjects = [
-        {
-            id: 1,
-            title: 'MetaRush',
-            description: 'Battle Royale NFT game with Photon Quantum backend. Built UI systems, controller support, and camera effects.',
-            genre: 'Battle Royale (NFT)',
-            teamSize: '20+',
-            period: '01/2024 - 02/2025',
-            tech: ['Unity', 'C#', 'Photon Quantum', 'DOTween'],
-            link: 'https://metarush.myria.com',
-            gradient: 'from-purple-600 to-blue-600'
-        },
-        {
-            id: 2,
-            title: 'Divine Intervention Chess',
-            description: 'Chess game with AI optimization, authentication systems, and multi-platform deployment (WebGL, Android, iOS).',
-            genre: 'Chess / Board Game',
-            teamSize: '5',
-            period: '02/2025 - 08/2025',
-            tech: ['Unity', 'PlayFab', 'Photon PUN', 'Facebook Auth'],
-            link: 'https://diinterplay.com',
-            gradient: 'from-blue-600 to-cyan-600'
-        },
-        {
-            id: 3,
-            title: 'Chess 2D',
-            description: 'Fullstack chess game with .NET backend, WebSocket server, and Unity frontend. Deployed with Docker & Nginx.',
-            genre: 'Chess / Board Game',
-            teamSize: 'Solo',
-            period: '05/2025 - 07/2025',
-            tech: ['Unity', '.NET 8', 'WebSocket', 'MongoDB', 'Docker'],
-            link: 'https://github.com/vietunitydev',
-            gradient: 'from-cyan-600 to-teal-600'
-        },
-    ];
+    const gradients = ['from-purple-600 to-blue-600', 'from-blue-600 to-cyan-600', 'from-cyan-600 to-teal-600'];
+
+    const featuredProjects = projects.slice(0, 3).map((project, index) => ({
+        id: project.id,
+        title: project.title,
+        description: project.description,
+        genre: project.platform || 'Project',
+        teamSize: project.teamSize || '-',
+        period: project.duration || '-',
+        tech: project.technologies || [],
+        link: project.videoUrl || `/projects/${project.id}`,
+        gradient: gradients[index % gradients.length]
+    }));
 
     // Detect mobile screen
     useEffect(() => {
@@ -153,8 +136,8 @@ const ProjectHighlights = () => {
                                         </h3>
                                         <a
                                             href={project.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
+                                            target={project.link.startsWith('http') ? '_blank' : undefined}
+                                            rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
                                             className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} hover:text-purple-400 transition-colors`}
                                         >
                                             <ExternalLink className="w-5 h-5" />
@@ -176,7 +159,7 @@ const ProjectHighlights = () => {
                                         </div>
                                         <div className="flex items-center gap-1">
                                             <Calendar className="w-3 h-3" />
-                                            {project.period.split(' - ')[0]}
+                                            {project.period.split(' - ')[0] || '-'}
                                         </div>
                                     </div>
 
@@ -234,8 +217,8 @@ const ProjectHighlights = () => {
                                 </h3>
                                 <a
                                     href={project.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                    target={project.link.startsWith('http') ? '_blank' : undefined}
+                                    rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
                                     className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} hover:text-purple-400 transition-colors`}
                                 >
                                     <ExternalLink className="w-5 h-5" />
@@ -257,7 +240,7 @@ const ProjectHighlights = () => {
                                 </div>
                                 <div className="flex items-center gap-1">
                                     <Calendar className="w-4 h-4" />
-                                    {project.period.split(' - ')[0]}
+                                    {project.period.split(' - ')[0] || '-'}
                                 </div>
                             </div>
 
@@ -284,7 +267,7 @@ const ProjectHighlights = () => {
             {/* View All Button */}
             <div className="text-center">
                 <button
-                    onClick={() => navigate('/projects')}
+                    onClick={() => router.push('/projects')}
                     className={`group ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} backdrop-blur-sm border-2 border-purple-600 text-purple-400 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full hover:bg-purple-600 hover:text-white transition-all transform hover:scale-105 text-sm font-semibold inline-flex items-center gap-2 shadow-lg`}
                 >
                     View All Projects

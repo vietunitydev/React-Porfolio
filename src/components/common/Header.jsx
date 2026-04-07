@@ -1,17 +1,19 @@
+"use client";
+
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { Home, Code, BookOpen, Sun, Moon, Github, Linkedin, Facebook } from 'lucide-react';
 import NavButton from './NavButton.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
-import {useTranslation} from "react-i18next";
+import { usePathname, useRouter } from '../../i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 const Header = ({ onNavigate }) => {
-    const location = useLocation();
-    const navigate = useNavigate();
+    const pathname = usePathname();
+    const router = useRouter();
     const { theme, setTheme, language, setLanguage } = useTheme();
-    const { t } = useTranslation();
+    const t = useTranslations();
 
-    const path = location.pathname.split('/')[1] || 'home';
+    const path = pathname.split('/')[1] || 'home';
 
     const toggleTheme = () => {
         setTheme(prev => prev === 'dark' ? 'light' : 'dark');
@@ -23,7 +25,7 @@ const Header = ({ onNavigate }) => {
     };
 
     const handleNavigation = (path) => {
-        navigate(path);
+        router.push(path);
         if (onNavigate) {
             onNavigate(); // Close menu on mobile
         }
@@ -90,7 +92,7 @@ const Header = ({ onNavigate }) => {
                     <button
                         onClick={toggleTheme}
                         className={`w-10 h-10 rounded-full ${theme === 'dark' ? 'bg-gray-800 text-gray-400 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'} flex items-center justify-center hover:text-white transition-colors`}
-                        title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                        title={theme === 'dark' ? t('header.themeDark') : t('header.themeLight')}
                     >
                         {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
                     </button>
@@ -99,7 +101,7 @@ const Header = ({ onNavigate }) => {
                     <button
                         onClick={toggleLanguage}
                         className={`w-10 h-10 rounded-full ${theme === 'dark' ? 'bg-gray-800 text-gray-400 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'} flex items-center justify-center hover:text-white transition-colors text-sm font-semibold`}
-                        title={language === 'vi' ? 'Switch to English' : 'Chuyển sang Tiếng Việt'}
+                        title={t('header.languageSwitch')}
                     >
                         {language === 'vi' ? 'VI' : 'EN'}
                     </button>

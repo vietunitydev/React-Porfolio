@@ -1,14 +1,18 @@
+"use client";
+
 import React from 'react';
 import { ArrowLeft, Users, Target, Calendar, Globe } from 'lucide-react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { projects } from '../../data/projects.js';
+import { useRouter } from '../../i18n/navigation';
 import { useTheme } from '../context/ThemeContext.jsx';
 
-const ProjectDetail = () => {
-    const { id } = useParams();
-    const navigate = useNavigate();
+/**
+ * @param {{
+ *   project: any
+ * }} props
+ */
+const ProjectDetail = ({ project }) => {
+    const router = useRouter();
     const { theme } = useTheme();
-    const project = projects.find(p => p.id === parseInt(id));
 
     if (!project) {
         return (
@@ -18,7 +22,7 @@ const ProjectDetail = () => {
                 <div className="text-center">
                     <h1 className={`text-2xl sm:text-3xl md:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4`}>Project Not Found</h1>
                     <button
-                        onClick={() => navigate('/projects')}
+                        onClick={() => router.push('/projects')}
                         className="bg-purple-600 hover:bg-purple-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors text-sm sm:text-base"
                     >
                         Back to Projects
@@ -31,7 +35,7 @@ const ProjectDetail = () => {
     const getYouTubeEmbedUrl = (url) => {
         if (!url) return null;
 
-        const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+        const youtubeRegex = /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/;
         const match = url.match(youtubeRegex);
         if (match && match[1]) {
             return `https://www.youtube.com/embed/${match[1]}`;
@@ -78,7 +82,7 @@ const ProjectDetail = () => {
             : 'bg-gradient-to-br from-gray-50 via-white to-gray-50'}`}>
             <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
                 <button
-                    onClick={() => navigate('/projects')}
+                    onClick={() => router.push('/projects')}
                     className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors mb-6 sm:mb-8 group"
                 >
                     <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 group-hover:-translate-x-1 transition-transform" />

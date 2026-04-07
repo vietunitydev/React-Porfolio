@@ -1,11 +1,13 @@
+"use client";
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from '../i18n/navigation';
 import ProjectCard from '../components/projects/ProjectCard';
 import { projects } from '../data/projects';
 import { useTheme } from '../components/context/ThemeContext.jsx';
 
 const ProjectsPage = () => {
-    const navigate = useNavigate();
+    const router = useRouter();
     const { theme } = useTheme();
 
     return (
@@ -24,7 +26,7 @@ const ProjectsPage = () => {
                         <ProjectCard
                             key={project.id}
                             project={project}
-                            onClick={() => navigate(`/projects/${project.id}`)}
+                            onClick={() => router.push(`/projects/${project.id}`)}
                         />
                     ))}
                 </div>

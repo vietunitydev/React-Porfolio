@@ -1,11 +1,13 @@
+"use client";
+
 import React from 'react';
 import { blogPosts } from '../data/blogPosts.js';
 import BlogCard from "../components/blogs/BlogCard.jsx";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from '../i18n/navigation';
 import { useTheme } from '../components/context/ThemeContext.jsx';
 
 const BlogPage = () => {
-    const navigate = useNavigate();
+    const router = useRouter();
     const { theme } = useTheme();
 
     const sortedPosts = [...blogPosts].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
@@ -39,7 +41,7 @@ const BlogPage = () => {
                             <BlogCard
                                 key={post.id}
                                 post={post}
-                                onClick={() => navigate(`/blogs/${post.slug}`)}
+                                onClick={() => router.push(`/blogs/${post.slug}`)}
                                 showYear={showYear}
                             />
                         );

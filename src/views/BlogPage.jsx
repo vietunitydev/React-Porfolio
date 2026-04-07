@@ -1,0 +1,59 @@
+"use client";
+
+import React from 'react';
+import BlogCard from "../components/blogs/BlogCard.jsx";
+import { useRouter } from '../i18n/navigation';
+import { useTheme } from '../components/context/ThemeContext.jsx';
+
+/**
+ * @param {{
+ *   blogPosts?: Array<any>
+ * }} props
+ */
+const BlogPage = ({ blogPosts = [] }) => {
+    const router = useRouter();
+    const { theme } = useTheme();
+
+    const sortedPosts = [...blogPosts].sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+
+    const yearMap = new Map();
+    sortedPosts.forEach(post => {
+        const year = new Date(post.publishedAt).getFullYear();
+        if (!yearMap.has(year)) {
+            yearMap.set(year, post.id);
+        }
+    });
+
+    return (
+        <div className={`min-h-screen ${theme === 'dark'
+            ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900'
+            : 'bg-gradient-to-br from-gray-50 via-white to-gray-50'}`}>
+            <section className="max-w-4xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pt-6 sm:pt-8 md:pt-10">
+                <h1 className={`text-2xl sm:text-3xl md:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-3 sm:mb-4 text-center`}>Blogs</h1>
+                <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-sm sm:text-base text-center mb-8 sm:mb-10 md:mb-12 max-w-2xl mx-auto px-4`}>
+                    Insights about game development, technical tutorials, and my journey as a Unity developer.
+                    Learn from real-world projects and industry best practices.
+                </p>
+            </section>
+            <section className="max-w-4xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 pb-8">
+                <div className="relative">
+                    {sortedPosts.map((post) => {
+                        const year = new Date(post.publishedAt).getFullYear();
+                        const showYear = yearMap.get(year) === post.id;
+
+                        return (
+                            <BlogCard
+                                key={post.id}
+                                post={post}
+                                onClick={() => router.push(`/blogs/${post.slug}`)}
+                                showYear={showYear}
+                            />
+                        );
+                    })}
+                </div>
+            </section>
+        </div>
+    );
+};
+
+export default BlogPage;

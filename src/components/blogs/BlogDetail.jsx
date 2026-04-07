@@ -1,18 +1,39 @@
-import {blogPosts} from "../../data/blogPosts.js";
-import {parseMarkdown, extractHeadings} from "../../hook/parseMarkdown.js";
+"use client";
+
 import { ArrowLeft, User, Clock, Calendar, Eye, Tag, List, X, ChevronRight, Type } from 'lucide-react';
-import {useNavigate, useParams} from "react-router-dom";
+import {useRouter} from "../../i18n/navigation";
 import BlogCard from "./BlogCard.jsx";
 import {useEffect, useState} from "react";
 import { useTheme } from '../context/ThemeContext.jsx';
 
-const BlogDetail = () => {
-    const { slug } = useParams();
-    const navigate = useNavigate();
+/**
+ * @param {{
+ *   post: {
+ *     id: number,
+ *     slug: string,
+ *     title: string,
+ *     author: string,
+ *     publishedAt: string,
+ *     readTime: string,
+ *     views: number,
+ *     tags: string[],
+ *     content: string
+ *   },
+ *   relatedPosts?: Array<{
+ *     id: number,
+ *     slug: string,
+ *     title: string,
+ *     publishedAt: string
+ *   }>,
+ *   initialContent?: string,
+ *   initialHeadings?: Array<{level: number, text: string, id: string}>
+ * }} props
+ */
+const BlogDetail = ({ post, relatedPosts = [], initialContent = '', initialHeadings = [] }) => {
+    const router = useRouter();
     const { theme } = useTheme();
-    const post = blogPosts.find(p => p.slug === slug || p.id.toString() === slug);
-    const [parsedContent, setParsedContent] = useState("");
-    const [headings, setHeadings] = useState([]);
+    const [parsedContent] = useState(initialContent);
+    const [headings] = useState(initialHeadings);
     const [activeId, setActiveId] = useState("");
     const [showTOC, setShowTOC] = useState(false);
     const [fontSize, setFontSize] = useState('sm'); // 'sm', 'base', 'lg', 'xl'
@@ -24,20 +45,6 @@ const BlogDetail = () => {
         lg: { label: 'Large', class: 'text-lg' },
         xl: { label: 'Extra Large', class: 'text-xl' }
     };
-
-    useEffect(() => {
-        const loadMarkdown = async () => {
-            if (post?.contentPath) {
-                const response = await fetch(post.contentPath);
-                const mdText = await response.text();
-                const html = parseMarkdown(mdText);
-                const toc = extractHeadings(mdText);
-                setParsedContent(html);
-                setHeadings(toc);
-            }
-        };
-        loadMarkdown();
-    }, [post]);
 
     // Track active heading on scroll
     useEffect(() => {
@@ -80,7 +87,7 @@ const BlogDetail = () => {
                 <div className="text-center">
                     <h1 className={`text-2xl sm:text-3xl md:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4`}>Blog Post Not Found</h1>
                     <button
-                        onClick={() => navigate('/blogs')}
+                        onClick={() => router.push('/blogs')}
                         className="bg-purple-600 hover:bg-purple-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors text-sm sm:text-base"
                     >
                         Back to Blog
@@ -309,11 +316,9 @@ const BlogDetail = () => {
                         More Articles
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                        {blogPosts
-                            .filter(p => p.id !== post.id)
-                            .slice(0, 2)
+                        {relatedPosts
                             .map((relatedPost) => (
-                                <BlogCard key={relatedPost.id} post={relatedPost} onClick={() => navigate(`/blogs/${relatedPost.slug}`)} />
+                                <BlogCard key={relatedPost.id} post={relatedPost} onClick={() => router.push(`/blogs/${relatedPost.slug}`)} />
                             ))}
                     </div>
                 </div>
