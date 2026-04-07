@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import {usePathname, useRouter} from 'next/navigation';
-import {ReactNode, useState} from 'react';
+import {ReactNode, useEffect, useState} from 'react';
 
 type AdminContainerProps = {
   title: string;
@@ -21,6 +21,38 @@ export default function AdminContainer({title, children}: AdminContainerProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const verifySession = async () => {
+      try {
+        const response = await fetch('/api/admin/session', {cache: 'no-store'});
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok || !data?.authenticated) {
+          const nextPath = pathname || '/admin';
+          router.replace(`/admin/login?next=${encodeURIComponent(nextPath)}`);
+          return;
+        }
+      } catch {
+        const nextPath = pathname || '/admin';
+        router.replace(`/admin/login?next=${encodeURIComponent(nextPath)}`);
+        return;
+      }
+
+      if (isMounted) {
+        setIsCheckingAuth(false);
+      }
+    };
+
+    void verifySession();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [pathname, router]);
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
@@ -34,6 +66,14 @@ export default function AdminContainer({title, children}: AdminContainerProps) {
       setIsLoggingOut(false);
     }
   };
+
+  if (isCheckingAuth) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-100 text-slate-600">
+        Checking admin session...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-900">
