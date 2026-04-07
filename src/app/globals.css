@@ -2,6 +2,202 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --ui-bg-page: #f3f4f6;
+    --ui-bg-surface: #ffffff;
+    --ui-bg-surface-muted: #eef2f7;
+    --ui-border: #d1d5db;
+    --ui-text-primary: #111827;
+    --ui-text-secondary: #4b5563;
+    --ui-text-muted: #6b7280;
+    --ui-accent: #1e3a8a;
+    --ui-accent-strong: #1e40af;
+    --ui-accent-soft: #dbeafe;
+  }
+
+  .dark {
+    --ui-bg-page: #030712;
+    --ui-bg-surface: #111827;
+    --ui-bg-surface-muted: #1f2937;
+    --ui-border: #374151;
+    --ui-text-primary: #f9fafb;
+    --ui-text-secondary: #d1d5db;
+    --ui-text-muted: #9ca3af;
+    --ui-accent: #93c5fd;
+    --ui-accent-strong: #bfdbfe;
+    --ui-accent-soft: rgba(147, 197, 253, 0.2);
+  }
+}
+
+@layer components {
+  .app-page {
+    @apply min-h-screen;
+    background-color: var(--ui-bg-page);
+    color: var(--ui-text-primary);
+  }
+
+  .app-section {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-8 sm:py-10 md:py-12;
+  }
+
+  .app-section-narrow {
+    @apply max-w-4xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-8 sm:py-10 md:py-12;
+  }
+
+  .app-section-title {
+    @apply text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-3 sm:mb-4;
+    color: var(--ui-text-primary);
+  }
+
+  .app-section-description {
+    @apply text-sm sm:text-base text-center mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto px-4;
+    color: var(--ui-text-secondary);
+  }
+
+  .app-surface {
+    background-color: var(--ui-bg-surface);
+  }
+
+  .app-surface-muted {
+    background-color: var(--ui-bg-surface-muted);
+  }
+
+  .app-card {
+    @apply rounded-2xl border shadow-theme-sm transition-all duration-300;
+    background-color: var(--ui-bg-surface);
+    border-color: var(--ui-border);
+  }
+
+  .app-card-hover {
+    @apply hover:shadow-theme-md;
+  }
+
+  .app-text-primary {
+    color: var(--ui-text-primary);
+  }
+
+  .app-text-secondary {
+    color: var(--ui-text-secondary);
+  }
+
+  .app-text-muted {
+    color: var(--ui-text-muted);
+  }
+
+  .app-border {
+    border-color: var(--ui-border);
+  }
+
+  .app-link-accent {
+    color: var(--ui-accent);
+  }
+
+  .app-link-accent:hover {
+    color: var(--ui-accent-strong);
+  }
+
+  .app-badge {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold;
+    color: var(--ui-accent);
+    background-color: var(--ui-accent-soft);
+  }
+
+  .app-badge-muted {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium;
+    color: var(--ui-text-secondary);
+    background-color: var(--ui-bg-surface-muted);
+  }
+
+  .app-accent-soft {
+    background-color: var(--ui-accent-soft);
+    color: var(--ui-accent);
+  }
+
+  .app-panel {
+    @apply rounded-2xl border;
+    background-color: var(--ui-bg-surface);
+    border-color: var(--ui-border);
+  }
+
+  .app-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors;
+  }
+
+  .app-btn-primary {
+    @apply app-btn text-white;
+    background-color: var(--ui-accent);
+  }
+
+  .app-btn-primary:hover {
+    background-color: var(--ui-accent-strong);
+  }
+
+  .app-btn-secondary {
+    @apply app-btn border;
+    color: var(--ui-text-primary);
+    border-color: var(--ui-border);
+    background-color: var(--ui-bg-surface);
+  }
+
+  .app-btn-secondary:hover {
+    background-color: var(--ui-bg-surface-muted);
+  }
+
+  .app-icon-btn {
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors;
+    color: var(--ui-text-secondary);
+    background-color: var(--ui-bg-surface-muted);
+  }
+
+  .app-icon-btn:hover {
+    color: var(--ui-text-primary);
+    background-color: var(--ui-bg-surface);
+  }
+
+  .app-sidebar {
+    @apply border-r shadow-theme-md;
+    background-color: var(--ui-bg-surface);
+    border-color: var(--ui-border);
+  }
+
+  .app-nav-btn {
+    @apply w-full flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-normal transition-colors;
+    color: var(--ui-text-secondary);
+  }
+
+  .app-nav-btn:hover {
+    color: var(--ui-text-primary);
+    background-color: var(--ui-bg-surface-muted);
+  }
+
+  .app-nav-btn-active {
+    @apply app-nav-btn text-white;
+    background-color: var(--ui-accent);
+  }
+
+  .app-nav-btn-active:hover {
+    background-color: var(--ui-accent-strong);
+  }
+
+  .app-toc-item {
+    @apply w-full text-left py-2 px-3 rounded-lg transition-colors text-sm;
+    color: var(--ui-text-secondary);
+  }
+
+  .app-toc-item:hover {
+    color: var(--ui-text-primary);
+    background-color: var(--ui-bg-surface-muted);
+  }
+
+  .app-toc-item-active {
+    @apply app-toc-item border-l-2;
+    color: var(--ui-accent);
+    border-left-color: var(--ui-accent);
+    background-color: var(--ui-accent-soft);
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -13,6 +209,8 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--ui-bg-page);
+  color: var(--ui-text-primary);
 }
 
 .scrollbar-hide::-webkit-scrollbar {

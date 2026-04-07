@@ -3,6 +3,7 @@
 import React from 'react';
 import { Home, Code, BookOpen, Sun, Moon, Github, Linkedin, Facebook } from 'lucide-react';
 import NavButton from './NavButton.jsx';
+import Button from '../primitives/Button.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
 import { usePathname, useRouter } from '../../i18n/navigation';
 import { useTranslations } from 'next-intl';
@@ -32,16 +33,16 @@ const Header = ({ onNavigate }) => {
     };
 
     return (
-        <aside className={`h-full w-full ${theme === 'dark' ? 'bg-gray-900 border-gray-800' : 'bg-white border-gray-200'} border-r flex flex-col shadow-xl`}>
+        <aside className="h-full w-full app-sidebar flex flex-col">
             {/* Profile Section */}
-            <div className={`p-6 sm:p-8 text-center border-b ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'}`}>
-                <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full bg-gradient-to-r from-purple-500 to-blue-500 p-1 mb-3 sm:mb-4">
-                    <div className={`w-full h-full rounded-full ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} flex items-center justify-center overflow-hidden`}>
+            <div className="p-6 sm:p-8 text-center border-b app-border">
+                <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full border-2 border-gray-400 p-1 mb-3 sm:mb-4">
+                    <div className="w-full h-full rounded-full app-surface-muted flex items-center justify-center overflow-hidden">
                         <img src={"/images/me.jpg"} alt={"avatar"} className="w-full h-full object-cover"/>
                     </div>
                 </div>
-                <h1 className={`text-xl sm:text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-2`}>{t('header.name')}</h1>
-                <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} italic text-sm sm:text-base`}>{t('header.title')}</p>
+                <h1 className="text-xl sm:text-2xl font-bold app-text-primary mb-2">{t('header.name')}</h1>
+                <p className="app-text-secondary italic text-sm sm:text-base">{t('header.title')}</p>
             </div>
 
             {/* Navigation */}
@@ -52,66 +53,64 @@ const Header = ({ onNavigate }) => {
                         icon={Home}
                         text={t('header.home')}
                         isActive={path === 'home' || path === ''}
-                        theme={theme}
                     />
                     <NavButton
                         onClick={() => handleNavigation('/projects')}
                         icon={Code}
                         text={t('header.projects')}
                         isActive={path === 'projects'}
-                        theme={theme}
                     />
                     <NavButton
                         onClick={() => handleNavigation('/blogs')}
                         icon={BookOpen}
                         text={t('header.blogs')}
                         isActive={path === 'blogs'}
-                        theme={theme}
                     />
                     <NavButton
                         onClick={() => handleNavigation('/archives')}
                         icon={BookOpen}
                         text={t('header.archives')}
                         isActive={path === 'archives'}
-                        theme={theme}
                     />
                     <NavButton
                         onClick={() => handleNavigation('/about')}
                         icon={BookOpen}
                         text={t('header.about')}
                         isActive={path === 'about'}
-                        theme={theme}
                     />
                 </div>
             </nav>
 
             {/* Social Links & Controls */}
-            <div className={`p-4 sm:p-6 border-t ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'}`}>
+            <div className="p-4 sm:p-6 border-t app-border">
                 <div className="flex justify-center gap-2 sm:gap-3 flex-wrap">
                     {/* Theme Toggle */}
-                    <button
+                    <Button
                         onClick={toggleTheme}
-                        className={`w-10 h-10 rounded-full ${theme === 'dark' ? 'bg-gray-800 text-gray-400 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'} flex items-center justify-center hover:text-white transition-colors`}
+                        variant="icon"
+                        size="icon"
                         title={theme === 'dark' ? t('header.themeDark') : t('header.themeLight')}
                     >
                         {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
-                    </button>
+                    </Button>
 
                     {/* Language Toggle */}
-                    <button
+                    <Button
                         onClick={toggleLanguage}
-                        className={`w-10 h-10 rounded-full ${theme === 'dark' ? 'bg-gray-800 text-gray-400 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'} flex items-center justify-center hover:text-white transition-colors text-sm font-semibold`}
+                        variant="icon"
+                        size="icon"
+                        className="text-sm font-semibold"
                         title={t('header.languageSwitch')}
                     >
                         {language === 'vi' ? 'VI' : 'EN'}
-                    </button>
+                    </Button>
 
                     {/* GitHub */}
                     <a
                         href="https://github.com/vietunitydev"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`w-10 h-10 rounded-full ${theme === 'dark' ? 'bg-gray-800 text-gray-400 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'} flex items-center justify-center hover:text-white transition-colors`}
+                        className="app-icon-btn"
                         title="GitHub"
                     >
                         <Github size={15} />
@@ -122,7 +121,7 @@ const Header = ({ onNavigate }) => {
                         href="https://www.linkedin.com/in/doanviet27204/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`w-10 h-10 rounded-full ${theme === 'dark' ? 'bg-gray-800 text-gray-400 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'} flex items-center justify-center hover:text-white transition-colors`}
+                        className="app-icon-btn"
                         title="LinkedIn"
                     >
                         <Linkedin size={15} />
@@ -133,7 +132,7 @@ const Header = ({ onNavigate }) => {
                         href="https://facebook.com/doanviet.027"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`w-10 h-10 rounded-full ${theme === 'dark' ? 'bg-gray-800 text-gray-400 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'} flex items-center justify-center hover:text-white transition-colors`}
+                        className="app-icon-btn"
                         title="Facebook"
                     >
                         <Facebook size={15} />

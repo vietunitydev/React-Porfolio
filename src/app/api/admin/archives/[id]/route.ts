@@ -1,10 +1,28 @@
 import mongoose from 'mongoose';
 import {NextResponse} from 'next/server';
-import {revalidateTag} from 'next/cache';
+import {revalidatePath, revalidateTag} from 'next/cache';
 import connectDB from '../../../../../lib/mongodb';
 import {Archive} from '../../../../../lib/models/archive';
 import {ARCHIVES_CACHE_TAG, mapArchive} from '../../../../../lib/content-data';
 import {toSlug} from '../../../../../lib/admin-utils';
+
+const SUPPORTED_LOCALES = ['vi', 'en'] as const;
+
+function revalidateArchiveListPaths() {
+  for (const locale of SUPPORTED_LOCALES) {
+    revalidatePath(`/${locale}/archives`);
+  }
+}
+
+function revalidateArchiveDetailPaths(slug: string) {
+  if (!slug) {
+    return;
+  }
+
+  for (const locale of SUPPORTED_LOCALES) {
+    revalidatePath(`/${locale}/archives/${slug}`);
+  }
+}
 
 type RouteContext = {
   params: Promise<{id: string}>;
@@ -58,6 +76,12 @@ export async function PUT(request: Request, context: RouteContext) {
   const payload = await request.json();
   const title = typeof payload?.title === 'string' ? payload.title.trim() : '';
 
+  const existing = await Archive.findById(id).lean();
+
+  if (!existing) {
+    return NextResponse.json({success: false, message: 'Archive entry not found.'}, {status: 404});
+  }
+
   if (!title) {
     return NextResponse.json(
       {success: false, message: 'Title is required.'},
@@ -88,6 +112,9 @@ export async function PUT(request: Request, context: RouteContext) {
   }
 
   revalidateTag(ARCHIVES_CACHE_TAG);
+  revalidateArchiveListPaths();
+  revalidateArchiveDetailPaths(String(existing.slug ?? ''));
+  revalidateArchiveDetailPaths(String(updated.slug ?? ''));
 
   return NextResponse.json({
     success: true,
@@ -111,6 +138,8 @@ export async function DELETE(_request: Request, context: RouteContext) {
   }
 
   revalidateTag(ARCHIVES_CACHE_TAG);
+  revalidateArchiveListPaths();
+  revalidateArchiveDetailPaths(String(deleted.slug ?? ''));
 
   return NextResponse.json({success: true, message: 'Archive entry deleted.'});
 }

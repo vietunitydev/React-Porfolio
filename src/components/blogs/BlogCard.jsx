@@ -1,4 +1,3 @@
-import { Calendar } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext.jsx';
 
 const BlogCard = ({ post, onClick, showYear }) => {
@@ -10,7 +9,7 @@ const BlogCard = ({ post, onClick, showYear }) => {
     return (
         <div className="relative mb-4 sm:mb-5">
             {showYear && (
-                <div className={`text-lg sm:text-xl font-bold ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} mb-3 sm:mb-4`}>
+                <div className="text-lg sm:text-xl font-bold app-text-secondary mb-3 sm:mb-4">
                     {date.getFullYear()}
                 </div>
             )}
@@ -19,7 +18,7 @@ const BlogCard = ({ post, onClick, showYear }) => {
                 {/* Gradient overlay */}
                 <div className={`absolute inset-0 pointer-events-none ${theme === 'dark' ? 'bg-gradient-to-r from-transparent via-gray-700/20 to-transparent' : 'bg-gradient-to-r from-transparent via-gray-300/20 to-transparent'}`} />
 
-                <div className={`w-16 sm:w-24 text-right z-10 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} flex-shrink-0`}>
+                <div className="w-16 sm:w-24 text-right z-10 app-text-secondary flex-shrink-0">
                     <div className="text-xs sm:text-sm font-semibold font-mono">{day} {month}</div>
                 </div>
 
@@ -31,7 +30,7 @@ const BlogCard = ({ post, onClick, showYear }) => {
                 <div className="flex-1 z-10 flex items-center min-w-0">
                     <button
                         onClick={onClick}
-                        className={`${theme === 'dark' ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-500'} font-medium text-sm sm:text-base md:text-lg transition-colors text-left py-0 truncate w-full`}
+                        className="app-link-accent font-medium text-sm sm:text-base md:text-lg transition-colors text-left py-0 truncate w-full"
                     >
                         {post.title}
                     </button>

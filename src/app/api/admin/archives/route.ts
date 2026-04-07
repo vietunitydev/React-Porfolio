@@ -1,9 +1,27 @@
 import {NextResponse} from 'next/server';
-import {revalidateTag} from 'next/cache';
+import {revalidatePath, revalidateTag} from 'next/cache';
 import connectDB from '../../../../lib/mongodb';
 import {Archive} from '../../../../lib/models/archive';
 import {ARCHIVES_CACHE_TAG, mapArchive} from '../../../../lib/content-data';
 import {toSlug} from '../../../../lib/admin-utils';
+
+const SUPPORTED_LOCALES = ['vi', 'en'] as const;
+
+function revalidateArchiveListPaths() {
+  for (const locale of SUPPORTED_LOCALES) {
+    revalidatePath(`/${locale}/archives`);
+  }
+}
+
+function revalidateArchiveDetailPaths(slug: string) {
+  if (!slug) {
+    return;
+  }
+
+  for (const locale of SUPPORTED_LOCALES) {
+    revalidatePath(`/${locale}/archives/${slug}`);
+  }
+}
 
 async function ensureUniqueSlug(baseSlug: string) {
   let slug = baseSlug || `archive-${Date.now()}`;
@@ -55,6 +73,8 @@ export async function POST(request: Request) {
   });
 
   revalidateTag(ARCHIVES_CACHE_TAG);
+  revalidateArchiveListPaths();
+  revalidateArchiveDetailPaths(created.slug);
 
   return NextResponse.json({
     success: true,

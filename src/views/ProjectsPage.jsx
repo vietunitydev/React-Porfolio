@@ -3,7 +3,7 @@
 import React from 'react';
 import { useRouter } from '../i18n/navigation';
 import ProjectCard from '../components/projects/ProjectCard';
-import { useTheme } from '../components/context/ThemeContext.jsx';
+import SectionContainer from '../components/primitives/SectionContainer.jsx';
 import { getProjectSortTimestamp } from '../lib/project-date';
 
 /**
@@ -13,7 +13,6 @@ import { getProjectSortTimestamp } from '../lib/project-date';
  */
 const ProjectsPage = ({ projects = [] }) => {
     const router = useRouter();
-    const { theme } = useTheme();
     const sortedProjects = React.useMemo(() => {
         return [...projects].sort((a, b) => {
             const aTime = getProjectSortTimestamp(a?.year || '');
@@ -36,12 +35,10 @@ const ProjectsPage = ({ projects = [] }) => {
     }, [projects]);
 
     return (
-        <div className={`min-h-screen ${theme === 'dark'
-            ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900'
-            : 'bg-gradient-to-br from-gray-50 via-white to-gray-50'}`}>
-            <section className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-6 sm:py-8 md:py-10">
-                <h1 className={`text-2xl sm:text-3xl md:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-3 sm:mb-4 text-center`}>My Projects</h1>
-                <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-sm sm:text-base text-center mb-8 sm:mb-10 md:mb-12 max-w-2xl mx-auto px-4`}>
+        <div className="app-page">
+            <SectionContainer width="wide" spacing="compact">
+                <h1 className="app-section-title">My Projects</h1>
+                <p className="app-section-description max-w-2xl">
                     Here are some of the games and projects I've worked on. Each project showcases different
                     aspects of game development and technical challenges I've solved.
                 </p>
@@ -55,7 +52,7 @@ const ProjectsPage = ({ projects = [] }) => {
                         />
                     ))}
                 </div>
-            </section>
+            </SectionContainer>
         </div>
     );
 };

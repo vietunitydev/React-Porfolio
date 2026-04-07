@@ -1,15 +1,12 @@
 import React from 'react';
 import { Code, Database, Wrench, Globe } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext.jsx';
+import SectionContainer from '../primitives/SectionContainer.jsx';
 
 const TechStack = () => {
-    const { theme } = useTheme();
-
     const techCategories = [
         {
             title: 'Programming Languages',
             icon: Code,
-            color: 'from-purple-500 to-pink-500',
             skills: [
                 { name: 'C#', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg' },
                 { name: 'C++', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg' },
@@ -21,7 +18,6 @@ const TechStack = () => {
         {
             title: 'Technologies & Frameworks',
             icon: Wrench,
-            color: 'from-blue-500 to-cyan-500',
             skills: [
                 { name: 'Unity', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg' },
                 { name: '.NET', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg' },
@@ -33,7 +29,6 @@ const TechStack = () => {
         {
             title: 'Databases',
             icon: Database,
-            color: 'from-cyan-500 to-teal-500',
             skills: [
                 { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
                 { name: 'MongoDB', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
@@ -44,7 +39,6 @@ const TechStack = () => {
         {
             title: 'Tools & Other',
             icon: Globe,
-            color: 'from-teal-500 to-green-500',
             skills: [
                 { name: 'Git', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
                 { name: 'GitHub', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg' },
@@ -56,25 +50,27 @@ const TechStack = () => {
     ];
 
     return (
-        <section className={`max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-8 sm:py-10 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+        <SectionContainer width="full" spacing="default">
             {/* Header */}
             <div className="text-center mb-8 sm:mb-12 md:mb-16">
-                <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4`}>
-                    Tech <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Stack</span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold app-text-primary mb-4">
+                    Tech Stack
                 </h2>
             </div>
 
             {/* Tech Categories Table */}
-            <div className={`${theme === 'dark' ? 'bg-gray-800/30' : 'bg-gray-50'} backdrop-blur-sm rounded-2xl border ${theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200'} overflow-hidden mb-8 sm:mb-12 shadow-lg`}>
+            <div className="app-panel overflow-hidden mb-8 sm:mb-12 shadow-theme-sm">
                 {techCategories.map((category, index) => {
+                    const Icon = category.icon;
                     return (
                         <div
                             key={index}
-                            className={`grid grid-cols-1 gap-4 p-4 sm:p-6 ${index !== techCategories.length - 1 ? `border-b ${theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200'}` : ''}`}
+                            className={`grid grid-cols-1 gap-4 p-4 sm:p-6 ${index !== techCategories.length - 1 ? 'border-b app-border' : ''}`}
                         >
                             {/* Category Title */}
                             <div className="flex items-center gap-2 sm:gap-3">
-                                <h3 className={`text-base sm:text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                                <Icon className="w-4 h-4 sm:w-5 sm:h-5 app-text-secondary" />
+                                <h3 className="text-base sm:text-lg font-bold app-text-primary">
                                     {category.title}
                                 </h3>
                             </div>
@@ -87,14 +83,14 @@ const TechStack = () => {
                                         className="group relative"
                                         title={skill.name}
                                     >
-                                        <div className={`w-10 h-10 sm:w-12 sm:h-12 ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} backdrop-blur-sm rounded-xl p-2 border ${theme === 'dark' ? 'border-gray-700/50 hover:border-gray-600' : 'border-gray-200 hover:border-gray-300'} transition-all hover:scale-110 flex items-center justify-center shadow-md`}>
+                                        <div className="w-10 h-10 sm:w-12 sm:h-12 app-card rounded-xl p-2 transition-all hover:scale-110 flex items-center justify-center shadow-md">
                                             <img
                                                 src={skill.icon}
                                                 alt={skill.name}
                                                 className="w-full h-full object-contain"
                                             />
                                         </div>
-                                        <span className={`absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none`}>
+                                        <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs app-text-secondary opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
                                             {skill.name}
                                         </span>
                                     </div>
@@ -104,7 +100,7 @@ const TechStack = () => {
                     );
                 })}
             </div>
-        </section>
+        </SectionContainer>
     );
 };
 

@@ -2,19 +2,17 @@
 
 import React, { useState } from 'react';
 import Header from '../common/Header';
-import { useTheme } from '../context/ThemeContext.jsx';
 import { Menu, X } from 'lucide-react';
 
 const Layout = ({ children }) => {
-    const { theme } = useTheme();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-950' : 'bg-gray-100'}`}>
+        <div className="app-page">
             {/* Mobile Menu Button */}
             <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className={`fixed top-4 left-4 z-50 lg:hidden ${theme === 'dark' ? ' text-white' : ' text-gray-900'} p-3 shadow-lg}`}
+                className="fixed top-4 left-4 z-50 lg:hidden app-icon-btn shadow-theme-sm"
             >
                 {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>

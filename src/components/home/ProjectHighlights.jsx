@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from '../../i18n/navigation';
 import { ExternalLink, Users, Calendar } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext.jsx';
+import Button from '../primitives/Button.jsx';
+import Card from '../primitives/Card.jsx';
+import SectionContainer from '../primitives/SectionContainer.jsx';
 
 /**
  * @param {{
@@ -10,14 +12,11 @@ import { useTheme } from '../context/ThemeContext.jsx';
  */
 const ProjectHighlights = ({ projects = [] }) => {
     const router = useRouter();
-    const { theme } = useTheme();
     const [currentIndex, setCurrentIndex] = useState(0);
     const scrollContainerRef = useRef(null);
     const [isMobile, setIsMobile] = useState(false);
 
-    const gradients = ['from-purple-600 to-blue-600', 'from-blue-600 to-cyan-600', 'from-cyan-600 to-teal-600'];
-
-    const featuredProjects = projects.slice(0, 3).map((project, index) => ({
+    const featuredProjects = projects.slice(0, 3).map((project) => ({
         id: project.id,
         title: project.title,
         description: project.description,
@@ -25,8 +24,7 @@ const ProjectHighlights = ({ projects = [] }) => {
         teamSize: project.teamSize || '-',
         period: project.duration || '-',
         tech: project.technologies || [],
-        link: project.videoUrl || `/projects/${project.id}`,
-        gradient: gradients[index % gradients.length]
+        link: project.videoUrl || `/projects/${project.id}`
     }));
 
     // Detect mobile screen
@@ -108,10 +106,10 @@ const ProjectHighlights = ({ projects = [] }) => {
     };
 
     return (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-8 sm:py-10">
+        <SectionContainer width="full" spacing="default">
             <div className="text-center mb-8 sm:mb-12 md:mb-16">
-                <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4`}>
-                    Featured <span className="bg-gradient-to-r from-purple-400 to-cyan-400 bg-clip-text text-transparent">Projects</span>
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold app-text-primary mb-4">
+                    Featured Projects
                 </h2>
             </div>
 
@@ -127,32 +125,31 @@ const ProjectHighlights = ({ projects = [] }) => {
                             key={project.id}
                             className="flex-shrink-0 w-full snap-center px-2"
                         >
-                            <div className={`group ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} backdrop-blur-sm rounded-2xl overflow-hidden border ${theme === 'dark' ? 'border-gray-700/50 hover:border-gray-600' : 'border-gray-200 hover:border-gray-300'} transition-all duration-300 shadow-lg`}>
-                                <div className={`h-2 bg-gradient-to-r ${project.gradient}`}></div>
+                            <Card hover padding="none" className="group overflow-hidden">
                                 <div className="p-4">
                                     <div className="flex items-start justify-between mb-3">
-                                        <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} group-hover:text-purple-400 transition-colors`}>
+                                        <h3 className="text-lg font-bold app-text-primary group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors">
                                             {project.title}
                                         </h3>
                                         <a
                                             href={project.link}
                                             target={project.link.startsWith('http') ? '_blank' : undefined}
                                             rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                            className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} hover:text-purple-400 transition-colors`}
+                                            className="app-text-secondary hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
                                         >
                                             <ExternalLink className="w-5 h-5" />
                                         </a>
                                     </div>
 
-                                    <div className="text-xs text-purple-400 font-semibold mb-2">
+                                    <div className="text-xs app-text-secondary font-semibold mb-2">
                                         {project.genre}
                                     </div>
 
-                                    <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-sm mb-3 line-clamp-3`}>
+                                    <p className="app-text-secondary text-sm mb-3 line-clamp-3">
                                         {project.description}
                                     </p>
 
-                                    <div className={`flex items-center gap-4 text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} mb-3`}>
+                                    <div className="flex items-center gap-4 text-xs app-text-muted mb-3">
                                         <div className="flex items-center gap-1">
                                             <Users className="w-3 h-3" />
                                             {project.teamSize}
@@ -167,19 +164,19 @@ const ProjectHighlights = ({ projects = [] }) => {
                                         {project.tech.slice(0, 3).map((tech, i) => (
                                             <span
                                                 key={i}
-                                                className={`px-2 py-1 ${theme === 'dark' ? 'bg-gray-700/50 text-gray-300' : 'bg-gray-100 text-gray-700'} rounded-full text-xs`}
+                                                className="app-badge-muted px-2 py-1"
                                             >
                                                 {tech}
                                             </span>
                                         ))}
                                         {project.tech.length > 3 && (
-                                            <span className={`px-2 py-1 ${theme === 'dark' ? 'bg-gray-700/50 text-gray-400' : 'bg-gray-100 text-gray-600'} rounded-full text-xs`}>
+                                            <span className="app-badge-muted px-2 py-1">
                                                 +{project.tech.length - 3}
                                             </span>
                                         )}
                                     </div>
                                 </div>
-                            </div>
+                            </Card>
                         </div>
                     ))}
                 </div>
@@ -192,8 +189,8 @@ const ProjectHighlights = ({ projects = [] }) => {
                             onClick={() => scrollToIndex(index)}
                             className={`w-2 h-2 rounded-full transition-all ${
                                 index === currentIndex
-                                    ? 'bg-purple-400 w-6'
-                                    : theme === 'dark' ? 'bg-gray-600' : 'bg-gray-300'
+                                    ? 'bg-gray-700 dark:bg-gray-300 w-6'
+                                    : 'bg-gray-300 dark:bg-gray-600'
                             }`}
                         />
                     ))}
@@ -203,37 +200,37 @@ const ProjectHighlights = ({ projects = [] }) => {
             {/* Desktop: Grid layout */}
             <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                 {featuredProjects.map((project, index) => (
-                    <div
+                    <Card
                         key={project.id}
-                        className={`group ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} backdrop-blur-sm rounded-2xl overflow-hidden border ${theme === 'dark' ? 'border-gray-700/50 hover:border-gray-600' : 'border-gray-200 hover:border-gray-300'} transition-all duration-300 hover:transform hover:scale-105 shadow-lg`}
+                        hover
+                        padding="none"
+                        className="group overflow-hidden hover:scale-105"
                         style={{ animationDelay: `${index * 100}ms` }}
                     >
-                        <div className={`h-2 bg-gradient-to-r ${project.gradient}`}></div>
-
                         <div className="p-6">
                             <div className="flex items-start justify-between mb-4">
-                                <h3 className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} group-hover:text-purple-400 transition-colors`}>
+                                <h3 className="text-xl font-bold app-text-primary group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors">
                                     {project.title}
                                 </h3>
                                 <a
                                     href={project.link}
                                     target={project.link.startsWith('http') ? '_blank' : undefined}
                                     rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                                    className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} hover:text-purple-400 transition-colors`}
+                                    className="app-text-secondary hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
                                 >
                                     <ExternalLink className="w-5 h-5" />
                                 </a>
                             </div>
 
-                            <div className="text-sm text-purple-400 font-semibold mb-3">
+                            <div className="text-sm app-text-secondary font-semibold mb-3">
                                 {project.genre}
                             </div>
 
-                            <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-sm mb-4 line-clamp-3`}>
+                            <p className="app-text-secondary text-sm mb-4 line-clamp-3">
                                 {project.description}
                             </p>
 
-                            <div className={`flex items-center gap-4 text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} mb-4`}>
+                            <div className="flex items-center gap-4 text-xs app-text-muted mb-4">
                                 <div className="flex items-center gap-1">
                                     <Users className="w-4 h-4" />
                                     {project.teamSize}
@@ -248,33 +245,34 @@ const ProjectHighlights = ({ projects = [] }) => {
                                 {project.tech.slice(0, 3).map((tech, i) => (
                                     <span
                                         key={i}
-                                        className={`px-3 py-1 ${theme === 'dark' ? 'bg-gray-700/50 text-gray-300' : 'bg-gray-100 text-gray-700'} rounded-full text-xs`}
+                                        className="app-badge-muted"
                                     >
                                         {tech}
                                     </span>
                                 ))}
                                 {project.tech.length > 3 && (
-                                    <span className={`px-3 py-1 ${theme === 'dark' ? 'bg-gray-700/50 text-gray-400' : 'bg-gray-100 text-gray-600'} rounded-full text-xs`}>
+                                    <span className="app-badge-muted">
                                         +{project.tech.length - 3}
                                     </span>
                                 )}
                             </div>
                         </div>
-                    </div>
+                    </Card>
                 ))}
             </div>
 
             {/* View All Button */}
             <div className="text-center">
-                <button
+                <Button
                     onClick={() => router.push('/projects')}
-                    className={`group ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} backdrop-blur-sm border-2 border-purple-600 text-purple-400 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full hover:bg-purple-600 hover:text-white transition-all transform hover:scale-105 text-sm font-semibold inline-flex items-center gap-2 shadow-lg`}
+                    variant="secondary"
+                    className="group rounded-full transform hover:scale-105"
                 >
                     View All Projects
                     <ExternalLink className="w-3 h-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </button>
+                </Button>
             </div>
-        </section>
+        </SectionContainer>
     );
 };
 
