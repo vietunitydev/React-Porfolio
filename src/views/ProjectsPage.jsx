@@ -4,6 +4,7 @@ import React from 'react';
 import { useRouter } from '../i18n/navigation';
 import ProjectCard from '../components/projects/ProjectCard';
 import { useTheme } from '../components/context/ThemeContext.jsx';
+import { getProjectSortTimestamp } from '../lib/project-date';
 
 /**
  * @param {{
@@ -13,6 +14,26 @@ import { useTheme } from '../components/context/ThemeContext.jsx';
 const ProjectsPage = ({ projects = [] }) => {
     const router = useRouter();
     const { theme } = useTheme();
+    const sortedProjects = React.useMemo(() => {
+        return [...projects].sort((a, b) => {
+            const aTime = getProjectSortTimestamp(a?.year || '');
+            const bTime = getProjectSortTimestamp(b?.year || '');
+
+            if (aTime === bTime) {
+                return Number(b?.id || 0) - Number(a?.id || 0);
+            }
+
+            if (aTime === Number.NEGATIVE_INFINITY) {
+                return 1;
+            }
+
+            if (bTime === Number.NEGATIVE_INFINITY) {
+                return -1;
+            }
+
+            return bTime - aTime;
+        });
+    }, [projects]);
 
     return (
         <div className={`min-h-screen ${theme === 'dark'
@@ -26,7 +47,7 @@ const ProjectsPage = ({ projects = [] }) => {
                 </p>
 
                 <div className="grid grid-cols-1 gap-6 sm:gap-8">
-                    {projects.map((project) => (
+                    {sortedProjects.map((project) => (
                         <ProjectCard
                             key={project.id}
                             project={project}

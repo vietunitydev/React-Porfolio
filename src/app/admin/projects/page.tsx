@@ -2,6 +2,7 @@
 
 import {FormEvent, useEffect, useMemo, useState} from 'react';
 import AdminContainer from '../../../components/admin/AdminContainer';
+import {toProjectDateInputValue} from '../../../lib/project-date';
 
 type ProjectRecord = {
   _id: string;
@@ -103,7 +104,7 @@ export default function AdminProjectsPage() {
     setForm({
       legacyId: String(project.id),
       title: project.title,
-      year: project.year,
+      year: toProjectDateInputValue(project.year),
       description: project.description,
       mainTasks: project.mainTasks.join('\n'),
       teamSize: project.teamSize,
@@ -127,7 +128,7 @@ export default function AdminProjectsPage() {
       const payload = {
         legacyId: Number(form.legacyId || 0),
         title: form.title,
-        year: form.year,
+        year: String(form.year || '').trim(),
         description: form.description,
         mainTasks: toLines(form.mainTasks),
         teamSize: form.teamSize,
@@ -209,8 +210,9 @@ export default function AdminProjectsPage() {
               />
             </label>
             <label className="text-sm text-slate-700">
-              Year
+              Date
               <input
+                type="date"
                 value={form.year}
                 onChange={(event) => setForm((prev) => ({...prev, year: event.target.value}))}
                 className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"

@@ -1,9 +1,11 @@
 import React from 'react';
 import { Calendar, ExternalLink } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext.jsx';
+import { formatProjectMonthYear } from '../../lib/project-date';
 
 const ProjectCard = ({ project, onClick }) => {
     const { theme } = useTheme();
+    const displayDate = formatProjectMonthYear(project.year);
     const thumbnail =
         project.screenshots?.[0] ||
         'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="240" viewBox="0 0 400 240"%3E%3Crect width="400" height="240" fill="%23334155"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" fill="%23cbd5e1" font-family="Arial" font-size="18"%3ENo Image%3C/text%3E%3C/svg%3E';
@@ -25,7 +27,7 @@ const ProjectCard = ({ project, onClick }) => {
                     </div>
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
                     <div className="absolute top-2 left-2 sm:top-3 sm:left-3 md:top-4 md:left-4 bg-purple-600 text-white px-2 py-0.5 sm:px-2.5 sm:py-1 md:px-3 md:py-1 rounded-full text-xs sm:text-sm font-semibold">
-                        {project.year}
+                        {displayDate}
                     </div>
                 </div>
 
@@ -43,7 +45,7 @@ const ProjectCard = ({ project, onClick }) => {
                     <div className="flex items-center justify-between">
                         <div className={`flex items-center gap-1 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'} text-xs sm:text-sm`}>
                             <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4" />
-                            <span>{project.year}</span>
+                            <span>{displayDate}</span>
                         </div>
                         <ExternalLink className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-purple-400 group-hover:text-purple-300" />
                     </div>
